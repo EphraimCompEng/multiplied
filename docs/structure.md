@@ -29,16 +29,17 @@ ___
 The partial product reduction stage reduces the number of partial products across multiple stages, eventually all products are reduced to one output.
 
 
-## Structure
-
-### Stages
+## Stages
 
 Each stage of a multiplier must reduce the number of partial products. 
 
 
 A naive approach could look like this:
 
-[ Stage 0 ]
+
+### [ Stage 0 ]
+
+
 The AND matrix produces initial set of partial products, and the each template isolates 2 rows at a time:
 ```
         -------|00000000
@@ -57,7 +58,10 @@ The AND matrix produces initial set of partial products, and the each template i
         0000000|0-------
 ```
 
-[ Stage 1 ]
+
+### [ Stage 1 ]
+
+
 Each group of partial products are reduced, via additions, and are grouped for the next stage:
 ```
         -----00|00000000
@@ -68,7 +72,10 @@ Each group of partial products are reduced, via additions, and are grouped for t
        00000000|00------
 ```
 
-[ Stage n ]
+
+### [ Stage n ]
+
+
 The final reduction results in a single complete value:
 
 ```
@@ -88,7 +95,11 @@ Templates need to be simple enough to configure, possibly in a CLI but the main 
 
 - [ ] Standardise templates
 
-[ Adder: 2 -> 1 ]
+
+
+### [ Adder: 2 -> 1 ]
+
+
 The naive reduction layer used a simple array to define the reduction layer. Each letter identifies bits to be grouped into a "cells". In this case, these cells would represent:
 ```
   [ Template Gen. ] [ Array ] [ Output         ]
@@ -109,7 +120,9 @@ Note that the "first" bit of each layer is ignored in the addition - these bits 
 
 
 
-[ CSA: 3 -> 4 ]
+### [ CSA: 3 -> 4 ]
+
+
 Another a reduction layer could use [CSAs](https://en.wikipedia.org/wiki/Carry-save_adder) used a simple array to define the reduction layer.
 ```
   [ Template      ] [ Array ] [ Output        ]
@@ -124,6 +137,7 @@ Another a reduction layer could use [CSAs](https://en.wikipedia.org/wiki/Carry-s
   --ZZZZZZ|Z0------    "Z",  
   #ZZZZZZZ|Z-------    "Z"  ] #ZZZZZZZ|Z-------
 ```
+
 Here, each CSA reduced 3 inputs to 2 inputs. The output is reordered to mirror how each bit of the CSA calculation is distributed, plus swapping the leftover bit to fit the distribution. For more information see [reduction](link/to/reduction).
 
 

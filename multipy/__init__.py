@@ -1,4 +1,7 @@
-__doc__ = """
+from multipy.core import *
+
+
+"""
 MultiPy - Build, test and analyse multiplier designs
 ====================================================
 
@@ -33,3 +36,8 @@ Copy vs in-place
 ----------------
 ??? TBD ???
 """
+
+
+__all__ = [
+    'core'
+]

@@ -1,0 +1,6 @@
+# Environment not finalised and could cause issues
+.venv
+
+
+# [Compiled source]
+*.py[ocd]

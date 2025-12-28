@@ -1,6 +1,6 @@
 # MultiPy
 
-Powerful tools for building, testing, and analysing multiplier designs. 
+A powerful tool for building, testing, and analysing multiplier designs. 
 
 
 # Why?

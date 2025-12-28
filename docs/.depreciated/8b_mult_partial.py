@@ -63,7 +63,7 @@ def carry_save_layers():
 def add_layers():
     pass
 
-def operand_test_list(max_value, min_value=1, min_output_value=1, clamp=True):
+def operand_test_list(max_value, min_value=1, min_output_value=1, clamp=True): # min_*input*_value not output.
     # if int(max_value) != 256:
     #     raise ValueError
     if int(max_value) < int(min_value):

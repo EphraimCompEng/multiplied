@@ -1,10 +1,10 @@
-# Environment not finalised and could cause issues
+# [Environmental]
+
+# not finalised and could cause issues
 .venv
 
+# Redundant
+.python-version
 
 # [Compiled source]
 *.py[ocd]
-
-
-# uv
-.python-version

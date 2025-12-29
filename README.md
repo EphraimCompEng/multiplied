@@ -5,14 +5,14 @@ A powerful tool for building, testing, and analysing multiplier designs.
 
 # Why?
 
-Generating and analysing multiplier designs by hand is labour intensive, even for small datasets. For entire [truth tables](https://en.wikipedia.org/wiki/Truth_table), this becomes close to impossible after 8-bits.
+Generating and analysing multiplier designs by hand is labour intensive, even for small datasets, for entire [truth tables](https://en.wikipedia.org/wiki/Truth_table), this is close to impossible.
 
-MultiPy aims to be a general tool for:
+MultiPy provides tools for:
 
 - Building partial product reduction layers
-- Generate complete truth tables of custom multipliers
-- Analyse and plot trends across entire datasets 
-- Track bits, columns, rows of reduction stages
+- Generating truth tables for custom algorithms
+- Analysis, plotting, and finding trends across a dataset(s)
+- Fine-grain access to bits, words or stages when building or analysing
 
 
 # Documentation
@@ -20,6 +20,8 @@ MultiPy aims to be a general tool for:
 [link/to/documentation](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs)
 
 ???{
+
+Setup Github Wiki, plus:
 
 Use [typst](https://typst.app/)?
 
@@ -30,47 +32,15 @@ Use [sphinx](https://www.sphinx-doc.org/en/master/)?
 # Setup
 
 
-???{
+```Python3
 
--> Configure [TOML](https://toml.io/) file? and or use CLI to configure the TOML? -> main.py uses TOML to set variables
-
--> Choose default dataset or build own [Parquet](https://github.com/apache/parquet-format)?
-
--> import templates to /src/templates/
-}
+```
 
 # Dependencies
 
 | database | math    | visualization |
 |:-------- |:------- |:------------- |
 | [Parquet](https://github.com/apache/parquet-format)  | [NumPy](https://numpy.org/)   | [Matplotlib](https://matplotlib.org/ )   |
-| [PyArrow](https://arrow.apache.org/docs/python/)     |                               | [Pillow](https://pillow.readthedocs.io/) |
 | [Pandas](https://pandas.pydata.org/)                 |                               |                                          |
 
 Full list TBD.
-
-# Roadmap
-
-Starting point:
-- [ ] Manage dependencies and automatically resolve them -- [uv](https://docs.astral.sh/uv/)?
-- [ ] Find optimal data structure for reduction stages 
-- [ ] Standardise templates 
-- [x] Find optimal file format: parquet?
-- [ ] Custom reduction stage templates
-- [ ] Automatic version control (MAJOR.MINOR.PATCH)
-
-Basic functionality; templates, generate, analyse:
-- [ ] 8-bit unsaturated multiply
-- [ ] 8-bit saturated multiply
-- [ ] Basic visualisation of bit ranges
-
-The potential dataset of 16-bit+ multipliers becomes astronomical and the program must be robust enough to deal with this efficiently. Only after: data structures, file formats, and efficient I/O are established and working well, MultiPy tackle:
-- [ ] Multiprocessing support to handle higher bit-widths
-- [ ] 16-bit unsaturated multiply
-- [ ] 16-bit saturated multiply
-- [ ] Heatmaps? plots? Advanced visualisation 
-
-Once the library is stable and optimised:
-- [ ] "Timing" stages/templates/multipliers -- User defined latencies  
-- [ ] 32-bit saturated multiply?
-- [ ] Use [cython](https://cython.org/)? [numba](https://numba.pydata.org/)? for more performance?

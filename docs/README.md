@@ -12,7 +12,7 @@ Generating and analysing designs by hand is labour intensive even for small data
 
 The first "stage" of s combinational multiplier creates all possible partial products. These producs are then reduced across multiple stages using a range of methods. Eventually all products are reduced to one output.
 
-A [Wallice tree](https://en.wikipedia.org/wiki/Wallice_tree) is one of many multplication stategies. Let's multiply 11 * 12: 
+A [Wallace tree](https://en.wikipedia.org/wiki/Wallace_tree) is one of many multplication stategies. Let's multiply 11 * 12: 
 
 ```
 11 * 12 -> 0b1011 * 0b1100
@@ -62,6 +62,11 @@ Most of the complex templates will be directed to find optiisation strategies to
 
 # Templates
 
+Describing how each stages reduces partial products.
+
+## Simple Templates
+
+## Complex Templates
 
 
 

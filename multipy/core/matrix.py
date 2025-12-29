@@ -2,7 +2,7 @@
 # Generating, Aligning Initial Partial Products #
 #################################################
 
-
+from typing import Any
 
 class Matrix:
     def __init__(self, bits: int):
@@ -11,9 +11,9 @@ class Matrix:
             self.bits = bits
         else:
             raise ValueError(f"Valid bit lengths: {valid_range}")
-        self.matrix = self.build_matrix()
+        self.matrix = self.__build_matrix()
 
-    def build_matrix(self) -> list[list[int]]:
+    def __build_matrix(self) -> list[list[int]]:
         """
         Build a logic AND matrix for a bitwidth of self.bits. For example:
         >>> self.bits = 4
@@ -28,7 +28,6 @@ class Matrix:
         for i in range(self.bits):
             matrix.append(["_"]*(self.bits-i) + row + ["_"]*i)
         return matrix
-
 
     def __repr__(self) -> str:
         """
@@ -45,11 +44,30 @@ class Matrix:
             pretty += "".join(row) + "\n"
         return pretty
 
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __len__(self) -> int:
+        return self.bits
+
+    def __getitem__(self, index: int) -> list:
+        return self.matrix[index]
+
+    def __eq__(self, matrix: Any, /) -> bool:
+        if matrix.bits != self.bits:
+            return False
+        for i in range(self.bits):
+            if matrix[i] != self.matrix[i]:
+                return False
+        return True
+
+
 def main():
     matrix4 = Matrix(4)
     print(matrix4)
     matrix8 = Matrix(8)
     print(matrix8)
 
+    print(matrix4 == matrix4)
 if __name__ == "__main__":
     main()

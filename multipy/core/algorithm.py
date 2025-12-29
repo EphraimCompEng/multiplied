@@ -29,7 +29,7 @@ class Algorithm(MpMatrix):
     def __init__(self) -> None:
         self.algorithm = {}
         self.bits = 0
-        self.len = len(self.algorithm)
+        self.stages = len(self.algorithm)
 
     def populate(self, arg: Any) -> None:
         """
@@ -39,14 +39,14 @@ class Algorithm(MpMatrix):
 
         if isinstance(arg, MpMatrix): # warp matrix in list to reuse code
             arg = [arg] # list(arg) throw error -- implement __iter___?
-        if not(isinstance(arg, list)):
+        elif not(isinstance(arg, list)):
             raise TypeError("Invalid argument type. Expected list[Matrix] or Matrix.")
 
         size = arg[0].bits if self.bits == 0 else self.bits
         for template in arg:
             if template.bits != size:
                 raise ValueError("All templates must have consistent bitwidth.")
-            self.algorithm[self.len] = template
+            self.algorithm[len(self.algorithm)] = template
         self.bits = size
 
     def __repr__(self) -> str:

@@ -50,3 +50,12 @@ Copy vs in-place
 ----------------
 ??? TBD ???
 """
+
+
+SUPPORTED_BIT_LENGTHS = {4, 8}
+
+__all__ = [
+    'MpMatrix',
+    'Algorithm',
+    'Template'
+]

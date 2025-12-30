@@ -1,12 +1,10 @@
 # MultiPy Overview
 
-A powerful tool for building, testing, and analysing multiplier designs. 
-
-# Why?
-
-This project was initially focused on how [saturation](https://en.wikipedia.org/wiki/Saturation_arithmetic) allows for the optimisation of a combinational [multiplier](https://en.wikipedia.org/wiki/Binary_multiplier). Once saturation is introduced, calculating the ceiling, or overflow, becomes extremely fast for one range of inputs. Another range always produces values within the extremes. The remaining range of inputs may or may not fall outside the extremes. Finding ways to predict if a given input results in an overflow, as early as possible, will result in faster calculations.
+This project was initially focused on how [saturation](https://en.wikipedia.org/wiki/Saturation_arithmetic) allows for the optimisation of a combinational [multiplier](https://en.wikipedia.org/wiki/Binary_multiplier). 
 
 Generating and analysing designs by hand is labour intensive even for small datasets. For entire [truth tables](https://en.wikipedia.org/wiki/Truth_table), this becomes close to impossible after 8-bits.
+
+Click [here](https://github.com/EphraimCompEng/multipy/blob/master/docs/algorithms/saturation.md) for more information on saturation in MultiPy.
 
 # Algorithms
 
@@ -66,15 +64,48 @@ Describing how each stages reduces partial products.
 
 ## Simple Templates
 
+Simple templates should be represented as a list with each element on
+a new line, this makes it clear how each layer is reduced:
+(Becomes tedious for 16-bit+, that said, complex templates will be 100x worse dependng on the coplexity)
+```py
+>>> my_simple_template = [
+    1,
+    1,
+    2,
+    2,
+    2,
+    .
+    .
+    .
+]
+```
+
+The "run" of a given element determines where adders, run=2, or a
+combination of CSAs and HAs, run=3, are used. Elements can be
+int or strings, as long as they follow the "run" principle.
+
+Complex templates require a more rigorous approach.
+
+
+
 ## Complex Templates
 
 
-
+Simple templates used a vector, internally these are translated to a hard coded complex template. Complex templates are matrices outligning what operactions occur and where they occur.  
 
 
 
 # Analysis
 
-
+Json is availiable for small truthtables and quickly visualising designs
+Parquet is recommended for large truth tables and intensive analysis   
+<!--Databases are a possibility i the future.-->
 
 ### Further Reading
+
+MultiPy:
+[Structures]()
+[Algorithms]()
+[Analysis]()
+
+Multiplication:

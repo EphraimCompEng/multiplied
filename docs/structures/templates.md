@@ -21,7 +21,7 @@ Templates need to be simple enough to configure, possibly in a CLI but the main 
 
 The adder reduction layer used a vector to define the reduction layer. Each letter identifies bits to be grouped into a "cells". In this case, these cells would represent:
 ```
-  [ Template Gen. ] [ Vector ] [ Output         ]
+  [ Template Gen. ] [ Vector ] [ Output        ]
   --------|WWWWWWW0 [  "W",                
   ------#W|WWWWWWW-    "W"     ------#W|WWWWWWW-       
                                   

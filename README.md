@@ -49,6 +49,8 @@ pip install multipy
 
 # Dependencies
 
+Planned or currently in use.
+
 | database | math    | visualization |
 |:-------- |:------- |:------------- |
 | [Parquet](https://github.com/apache/parquet-format)  | [NumPy](https://numpy.org/)   | [Matplotlib](https://matplotlib.org/ )   |

@@ -17,23 +17,33 @@ MultiPy provides tools for:
 
 # Documentation
 
-[link/to/documentation](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs)
+Documentation is continuously being added as the project progresses, including usage, general theory and implementations of algorithms using MultiPy.
 
-???{
+For more information head to [/docs/](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs). 
 
-Setup Github Wiki, plus:
+<!--- [Installation](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs/installation.md)
+- [Usage](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs/usage.md)
+- [API Reference](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs/api_reference.md)-->
 
-Use [typst](https://typst.app/)?
 
+<!--
 Use [sphinx](https://www.sphinx-doc.org/en/master/)?
+-->
 
-}
 
 # Setup
 
+### PIP
+```
+pip install multipy
+```
+
+```
+<how to install module from source>
+```
 
 ```Python3
-
+>>> import multipy as mp
 ```
 
 # Dependencies

@@ -94,7 +94,11 @@ Complex templates require a more rigorous approach.
 ## Complex Templates
 
 
-Simple templates used a vector, internally these are translated to a hard coded complex template. Complex templates are matrices outligning what operactions occur and where they occur.  
+Simple templates used a vector, internally these are translated to a hard coded complex template. Complex templates are matrices outligning what operations occur and where they occur. They also have a range of tools inaccessible to simple templates:
+
+- User defined positions for CSAs, Adders, Decoders and Bit-Mapping 
+- 
+
 
 
 

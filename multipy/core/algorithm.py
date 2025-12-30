@@ -56,8 +56,8 @@ class Algorithm(MpMatrix):
             pretty += f"S{i}:\n" + self.pprint_matrix(t) + "\n"
         return pretty
 
-def reduce(alg: Algorithm, matrix: MpMatrix) -> None:
-    """
-    Take youngest template, apply it to matrix, then update
-    """
-    ...
+    def step(self, matrix: MpMatrix) -> None:
+        """
+        Take youngest template, apply to matrix, remove template
+        """
+        ...

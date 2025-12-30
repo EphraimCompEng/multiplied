@@ -17,9 +17,10 @@ MultiPy provides tools for:
 
 # Documentation
 
-Documentation continues to grow as the project progresses, including usage, general theory and implementations of algorithms using MultiPy.
+Documentation continues to grow with the project. Resouces for usage, general theory and implementations of algorithms using MultiPy can be found throughout the repository. 
 
 For more information head to [/docs/](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs). 
+
 
 <!--- [Installation](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs/installation.md)
 - [Usage](https://github.com/EphraimCompEng/multiplier-lab/tree/master/docs/usage.md)

@@ -21,9 +21,9 @@ decoders, flooding and sneaky tricks like using carry-in(cin) on adders.
 
 
 from typing import Any
-from .matrix import MpMatrix
+from .matrix import Matrix
 
-class Algorithm(MpMatrix):
+class Algorithm(Matrix):
 
     algorithm = {}
     def __init__(self) -> None:
@@ -37,7 +37,7 @@ class Algorithm(MpMatrix):
         consistent bitwidth.
         """
 
-        if isinstance(arg, MpMatrix): # warp matrix in list to reuse code
+        if isinstance(arg, Matrix): # warp matrix in list to reuse code
             arg = [arg] # list(arg) throw error -- implement __iter___?
         elif not(isinstance(arg, list)):
             raise TypeError("Invalid argument type. Expected list[Matrix] or Matrix.")
@@ -56,7 +56,7 @@ class Algorithm(MpMatrix):
             pretty += f"S{i}:\n" + self.pprint_matrix(t) + "\n"
         return pretty
 
-    def step(self, matrix: MpMatrix) -> None:
+    def step(self, matrix: Matrix) -> None:
         """
         Take youngest template, apply to matrix, remove template
         """

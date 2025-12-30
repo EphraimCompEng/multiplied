@@ -5,7 +5,7 @@
 import multipy as mp
 
 def test_empty_matrix():
-    matrix = mp.MpMatrix(8)
+    matrix = mp.Matrix(8)
     assert matrix == matrix
     assert matrix.matrix == [
         ['_', '_', '_', '_', '_', '_', '_', '_', 0, 0, 0, 0, 0, 0, 0, 0],
@@ -19,10 +19,10 @@ def test_empty_matrix():
     ]
 
 def test_build_matrix():
-    matrix         = mp.MpMatrix(8)
-    mult_by_zero_a = mp.MpMatrix(8)
-    mult_by_zero_b = mp.MpMatrix(8)
-    # exceed_matrix  = mp.MpMatrix(8)
+    matrix         = mp.Matrix(8)
+    mult_by_zero_a = mp.Matrix(8)
+    mult_by_zero_b = mp.Matrix(8)
+    # exceed_matrix  = mp.Matrix(8)
 
     matrix.build_matrix(0, 0)
     mult_by_zero_a.build_matrix(0, 42)
@@ -34,8 +34,8 @@ def test_build_matrix():
     # print(vars(mult_by_zero_b))
 
 def test_agorithm():
-    temp1 = mp.MpMatrix(8) # Placeholder for template
-    temp2 = mp.MpMatrix(8) # Placeholder for template
+    temp1 = mp.Matrix(8) # Placeholder for template
+    temp2 = mp.Matrix(8) # Placeholder for template
     alg   = mp.Algorithm()
     arg   = [temp1, temp2]
     alg.populate(arg)

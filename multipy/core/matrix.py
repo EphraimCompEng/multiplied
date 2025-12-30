@@ -2,19 +2,20 @@
 # Generating, Aligning Initial Partial Products #
 #################################################
 
+from pydoc import classify_class_attrs
 import multipy as mp
 from typing import Any
 
 
-class MpMatrix:
+class Matrix:
     def __init__(self, bits: int):
-        valid_range = mp.SUPPORTED_BIT_LENGTHS
+        valid_range = mp.SUPPORTED_BITWIDTHS
         if bits not in valid_range:
             raise ValueError(f"Valid bit lengths: {valid_range}")
         self.bits = bits
         self.matrix = self.__empty_matrix()
 
-    def __empty_matrix(self) -> list[list[int]]:
+    def __empty_matrix(self) -> list[list[Any]]:
         """
         Build a logic AND matrix for a bitwidth of self.bits. For example:
         >>> self.bits = 4
@@ -38,8 +39,8 @@ class MpMatrix:
 
         # convert to binary, removing '0b' and padding with zeros
         # b is reversed to bring LSB to the top of matrix
-        a = bin(operand_a)[2:].zfill(self.bits)
-        b = bin(operand_b)[2:].zfill(self.bits)[::-1]
+        a = a.zfill(self.bits)
+        b = b.zfill(self.bits)[::-1]
         i = 0
         matrix = []
         while i < self.bits:
@@ -51,8 +52,8 @@ class MpMatrix:
                 i += 1
         self.matrix = matrix
 
-
-    def pprint_matrix(self, matrix: list[list[int]]) -> str:
+    @classmethod
+    def pretty(cls, matrix: list[list[Any]]) -> str:
         """
         Format self.matrix as a string:
 
@@ -61,18 +62,18 @@ class MpMatrix:
          __0000__\n
          _0000___"
         """
-        pretty = ""
+        pretty_ = ""
         for i in matrix:
             row = [str(x) for x in i]
-            pretty += "".join(row) + "\n"
-        return pretty
+            pretty_ += "".join(row) + "\n"
+        return pretty_
 
 
     def __repr__(self) -> str:
-        return self.pprint_matrix(self.matrix)
+        return self.pretty(self.matrix)
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return str(self.__repr__())
 
     def __len__(self) -> int:
         return self.bits

@@ -1,5 +1,5 @@
 from multipy.core.matrix import (
-    MpMatrix
+    Matrix
 )
 
 from multipy.core.algorithm import (
@@ -52,10 +52,10 @@ Copy vs in-place
 """
 
 
-SUPPORTED_BIT_LENGTHS = {4, 8}
+SUPPORTED_BITWIDTHS = {4, 8}
 
 __all__ = [
-    'MpMatrix',
+    'Matrix',
     'Algorithm',
     'Template',
     'truth_scope'

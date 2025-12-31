@@ -19,16 +19,16 @@ def _is_char(ch:str) -> bool:
         return False
 
 
-def build_simple_template(pattern: list[str]
-) -> list[list[str]]:
+def build_simple_template(pattern: list[str]) -> list[list[str]]:
     """
     Build a simple template for a given bitwidth.
     >>> self.bits = 4
     >>> build_template(self.pattern)
-    [['_','_','_','_','a','a','a','a'], # p = ['a',
-     ['_','_','_','a','a','a','a','_'], #      'a',
-     ['_','_','b','b','b','b','_','_'], #      'b',
-     ['_','b','b','b','b','_','_','_']] #      'b']
+
+    [['_','_','_','_','A','a','A','a'], # p = ['a',\n
+    ['_','_','_','A','a','A','a','_'], #       'a',\n
+    ['_','_','B','b','B','b','_','_'], #       'b',\n
+    ['_','B','b','B','b','_','_','_']] #       'b']\n
     """
     matrix = []
 
@@ -41,7 +41,7 @@ def build_csa(
 ) -> tuple[list, list]: # Carry Save Adder -> (template, result)
     """
     Returns template "slices" for a csa reduction and the resulting slice.\n
-    [slice]\t[csa]\t\t[result]\n
+    [slice]\t [csa]\t\t[result]\n
     ____0000 ____AaAa         \n
     ___0000_ ___aAaA_ __AaAaAa\n
     __0000__ __AaAa__ __aAaA__\n

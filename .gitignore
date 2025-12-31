@@ -1,12 +1,8 @@
 # [Environmental]
-
-
 *.egg-info
-
-# not finalised and could cause issues
 *.venv
 
-# Redundant
+# [Redundant]
 *.python-version
 
 # [Compiled source]

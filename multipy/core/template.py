@@ -2,51 +2,23 @@
 # Returns Template Objects Using User Patterns #
 ################################################
 
-"""
-Simple templates should be represented as a list with each element on
-a new line, this makes it clear how each layer is reduced:
->>> my_simple_template = [
-    1,
-    1,
-    2,
-    2,
-    2,
-    .
-    .
-    .
-]
-
-The "run" of a given element determines where adders, run=2, or a
-combination of CSAs and HAs, run=3, are used. Elements can be
-int or strings, as long as they follow the "run" principle.
-
-Complex templates require a more rigorous approach.
-
-"""
-
-
 from typing import Any
-import string
-import copy
 import multipy as mp
+import copy
 
 
-class Template:
-    cell = (ch for ch in string.ascii_lowercase)
 
-    def __init__(self, pattern: list[Any]): # Complex or simple
-        valid_range = mp.SUPPORTED_BITWIDTHS
-        if len(pattern) not in valid_range:
-            raise ValueError(f"Valid bit lengths: {valid_range}")
-        if '_' in set(pattern):
-            raise ValueError("Invalid pattern: '_' is not allowed")
-        self.len   = len(pattern)
-        self.pattern  = pattern
-        self.template = build_simple_template(self.pattern)
-        self.result   = None
-    
+def _is_char(ch:str) -> bool:
+    """
+    Tests if a string is exactly one alphabetic character
+    """
+    try:
+        ord(ch)
+        return True
+    except (ValueError, TypeError):
+        return False
 
-    
+
 def build_simple_template(pattern: list[str]
 ) -> list[list[str]]:
     """
@@ -76,13 +48,17 @@ def build_csa(
     """
     if len(template_slice) != 3:
         raise ValueError("Invalid template slice: must be 3 rows")
+
+    # loop setup
     n = len(template_slice[0])
     result = [['_']*n, ['_']*n]
     csa_slice = copy.copy(template_slice)
     tff = char == char.lower() # Toggle flip flop
     for i in range(n):
-        # column = [csa_slice[0][i],csa_slice[1][i],csa_slice[2][i]]
-        # replace non filler elements with template char
+        # For int in template slice, map possible CSA operands to adder_slice
+        # Then map possible outputs to result
+        # [ bA + bB + bC = 0b00, 0b01, 0b10 ]
+        # CSA auto maps Cout: FF, see templates/map.py
         csa_slice[0][i] = char if (y0:=csa_slice[0][i] != '_') else '_'
         csa_slice[1][i] = char if (y1:=csa_slice[1][i] != '_') else '_'
         csa_slice[2][i] = char if (y2:=csa_slice[2][i] != '_') else '_'
@@ -104,29 +80,33 @@ def build_adder(
     """
     if len(template_slice) != 2:
         raise ValueError("Invalid template slice: must be 2 rows")
+
+    # loop setup
     n = len(template_slice[0])
     result = [['_']*n]
-    adder_slice = copy.copy(template_slice)
-    tff = char == char.lower() # Toggle flip flop
+    adder_slice = copy.copy(template_slice) # ensure no references
+    tff         = char == char.lower() # Toggle flip flop
     for i in range(n):
+        # For int in template slice, map possible ADD operands to adder_slice
+        # Then map possible outputs to result
+        # [ bA + bB = 0b00, 0b01, 0b10, 0b11]
         adder_slice[0][i] = char if (y0:=adder_slice[0][i] != '_') else '_'
         adder_slice[1][i] = char if (y1:=adder_slice[1][i] != '_') else '_'
-        result[0][i] = char if y0 or y1 else '_'
+        result[0][i]      = char if y0 or y1 else '_'
         tff  = not(tff) # True -> False -> True...
         char = char.lower() if tff else char.upper()
 
     # Adding final carry
+    tff      = not(tff) # Undo last flip to find last used tff value
     pre_char = char
-    tff  = not(tff) # Undo last flip to find lasr used tff value
-    char = char.lower() if tff else char.upper()
-    index = result[0].index(char)-1 # find first instance of char - 1
+    char     = char.lower() if tff else char.upper()
+    index    = result[0].index(char)-1 # find first instance of char - 1
     result[0][index] = pre_char # Final carry place in result template
-
 
     return adder_slice, result
 
 ###
-# Simple laps move entire rows  
+# Simple maps move entire rows
 ###
 
 # def build_map(char: str, matrix: list[list[Any]]
@@ -140,11 +120,29 @@ def build_adder(
 #     00 FF 00\t 0 1 _\t  0 _ 1\n
 #     00 00 00\t _ _ _\t  _ 0 _\n
 #     """
-    
-    
+
+
 #     ...
 
 
+class Template:
+    # import string
+    # cell = (ch for ch in string.ascii_lowercase)
+
+    def __init__(self, template: list[Any], result: Any = None): # Complex or simple
+        valid_range  = mp.SUPPORTED_BITWIDTHS
+        self.len     = len(template)
+        self.result  = result
+        self.pattern = None
+
+        # length of any template represents it's bitwidth
+        if len(template) not in valid_range:
+            raise ValueError(f"Valid bit lengths: {valid_range}")
+        if _is_char(template[0]):
+            self.pattern  = template
+            self.template, self.result  = build_simple_template(template)
+        elif _is_char(template[0][0]):
+            self.template = template
 
 
 

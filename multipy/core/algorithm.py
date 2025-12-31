@@ -44,16 +44,31 @@ class Algorithm(Matrix):
         """
 
         if isinstance(arg, Matrix): # warp matrix in list to reuse code
-            arg = [arg] # list(arg) throw error -- implement __iter___?
+            arg = [arg] # list(arg) throws error -- implement __iter___?
         elif not(isinstance(arg, list)):
             raise TypeError("Invalid argument type. Expected list[Matrix] or Matrix.")
 
-        size = arg[0].bits if (self.bits == 0) else self.bits
+        bit = arg[0].bits if (self.bits == 0) else self.bits
         for template in arg:
-            if template.bits != size:
+            if template.bits != bit:
                 raise ValueError("All templates must have consistent bitwidth.")
             self.algorithm[len(self.algorithm)] = template
-        self.bits = size
+        self.bits = bit
+
+
+    @classmethod
+    def step(cls, matrix: Matrix) -> None:
+        """
+        Take youngest template, apply to matrix, remove template
+        """
+        ...
+
+    @classmethod
+    def trim(cls, matrix: Matrix) -> None:
+        """
+        Trim empty rows from a matrix
+        """
+        ...
 
     def __repr__(self) -> str:
         pretty = ""
@@ -61,9 +76,3 @@ class Algorithm(Matrix):
         for i, t in self.algorithm.items():
             pretty += f"S{i}:\n" + str(t) + "\n"
         return pretty
-
-    def step(self, matrix: Matrix) -> None:
-        """
-        Take youngest template, apply to matrix, remove template
-        """
-        ...

@@ -36,9 +36,9 @@ import multipy as mp
 
 Planned or currently in use.
 
-| database | math    | visualization |
-|:-------- |:------- |:------------- |
-| [Parquet](https://github.com/apache/parquet-format)  | [NumPy](https://numpy.org/)   | [Matplotlib](https://matplotlib.org/ )   |
-| [Pandas](https://pandas.pydata.org/)                 |                               |                                          |
+| database | visualization | docs |
+|:-------- |:------------- |:---- |
+| [Parquet](https://github.com/apache/parquet-format)| [Matplotlib](https://matplotlib.org/ ) | [Sphinx](https://www.sphinx-doc.org/en/master/) |
+| [Pandas](https://pandas.pydata.org/)               |                                        |                                                 |
 
 Full list TBD.

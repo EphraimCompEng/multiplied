@@ -8,7 +8,7 @@ import copy
 
 
 # move to _utils?
-def _is_char(ch:str) -> bool:
+def _ischar(ch:str) -> bool:
     """
     Tests if a string is exactly one alphabetic character
     """
@@ -89,7 +89,7 @@ def build_adder(
     # tff x char can be replace with an infinite generator
     # while True: yield outputs char.upper(); yeild char.lower
     # make and add to _utils?
-    tff         = char == char.lower() # Toggle flip flop
+    tff = (char == char.lower()) # Toggle flip flop
     for i in range(n):
         # For int in template slice, map possible ADD operands to adder_slice
         # Then map possible outputs to result
@@ -126,10 +126,10 @@ class Template:
         # length of any template represents it's bitwidth
         if len(template) not in valid_range:
             raise ValueError(f"Valid bit lengths: {valid_range}")
-        if _is_char(template[0]):
+        if _ischar(template[0]):
             self.pattern  = template
             self.template, self.result = build_simple_template(template)
-        elif _is_char(template[0][0]):
+        elif _ischar(template[0][0]):
             self.template = template
             self.merged = None
 

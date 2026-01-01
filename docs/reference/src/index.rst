@@ -1,21 +1,30 @@
-.. MultiPy documentation master file, created by
-   sphinx-quickstart on Wed Dec 31 13:27:42 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-MultiPy documentation
+MultiPy Documentation
 =====================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+A powerful tool to build, test, and analyse multiplier designs.
 
-.. note::
 
-   This project is under active development.
+
+Generating and analysing multiplier designs by hand is labour intensive, even for small datasets, for entire truth tables, this is close to impossible.
+
+MultiPy provides tools for:
+
+- Custom partial product reduction via templates
+- Generating complete truth tables
+- Analysis, plotting, and managing datasets
+- Fine-grain access to bits, words or stages
+
+
+This project is very early in development. If you would like to contribute, you can contact me by :doc:`clicking here <contact>`
+
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :hidden: 
 
-   modules
+    intro
+    starting
+    guide
+    reference
+    changelog
+    contact

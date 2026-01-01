@@ -1,0 +1,11 @@
+=========
+Changelog
+=========
+
+Version 0.1
+-----------
+
+.. release:: 0.1.0
+   :date: 2023-01-01
+
+:canonical: https://github.com/EphraimCompEng/multipy/releases/tag/v0.1.0

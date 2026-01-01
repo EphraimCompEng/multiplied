@@ -10,7 +10,7 @@ Generating and analysing multiplier designs by hand is labour intensive, even fo
 MultiPy provides tools for:
 
 - Custom partial product reduction via [templates](https://github.com/EphraimCompEng/multipy/blob/master/docs/structures/templates.md)
-- Generating truth tables for algorithms
+- Generating complete truth tables   
 - Analysis, plotting, and managing datasets
 - Fine-grain access to bits, words or stages 
 

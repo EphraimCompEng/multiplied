@@ -50,7 +50,7 @@ class Algorithm(mp.Matrix):
         self.bits = bit
 
     @classmethod
-    def split(cls, matrix: mp.Matrix, rows: int) -> list[mp.Matrix]:
+    def split(cls, matrix: mp.Matrix, rows: int):
         """
         Returns list of slices via progressive allocation.
 

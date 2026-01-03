@@ -6,7 +6,7 @@ on:
     branches: [master]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,26 +29,19 @@ jobs:
           python -m venv .venv
           .venv/bin/python -m pip install --upgrade pip
           .venv/bin/pip install -r requirements.txt
+          .venv/bin/pip install -i https://test.pypi.org/simple/ multipy
+
       - name: Build Sphinx
         run: |
-          .venv/bin/sphinx-build -b html -E ../docs/reference/src ../docs/reference/build
-
-
-
-      # - name: Build Sphinx (Makefile)
-      #   run: |
-      #     # If you use the default Sphinx Makefile inside docs/, this will build to docs/_build/html
-      #     make -C docs html
-      #   continue-on-error: false
-
-      # Alternative build step if your sources are docs/ (no Makefile) or you want explicit sphinx-build:
-      # - name: Build Sphinx (sphinx-build)
-      #   run: |
-      #     sphinx-build -b html docs/reference/src docs/build
-
+          .venv/bin/sphinx-build -b html -E docs/reference/src docs/reference/build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-docs
+          path: docs/reference/build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/
+          publish_dir: docs/reference/build
           publish_branch: gh-pages

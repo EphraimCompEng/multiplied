@@ -42,10 +42,9 @@ def build_simple_map(matrix: mp.Matrix, reversed: bool=False) -> mp.Map:
     """
     ...
 
-def dadda_map(bits):
+def build_dadda_map(bits) -> mp.Map:
     """
-    Return map to collect partial products into an upside down triangle:
-    a prerequisite for the dadda algorithm.
+    Return map which represents starting point of Dadda tree algorithm.
     """
     assert bits in mp.SUPPORTED_BITWIDTHS, (
         ValueError(f"\tError: Unsupported bitwidth {bits}. Expected {mp.SUPPORTED_BITWIDTHS}")
@@ -72,4 +71,4 @@ def dadda_map(bits):
     }                                                                                           #
     # ----------------------------------------------------------------------------------------- #
 
-    return Map(dadda_map[bits])
+    return Map(dadda_map[bits], bits)

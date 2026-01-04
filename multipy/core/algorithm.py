@@ -33,10 +33,6 @@ class Algorithm(mp.Matrix):
         self.result    = {}
         self.algorithm = {}
         """Structure of algorithm:
-        >>> self.algorithm[0] = {
-        >>>     "matrix" : mp.Matrix
-        >>>     "map"    : mp.Map
-        >>> }
         >>> self.algorithm[x] = {
         >>>     "template" : mp.Template
         >>>     "result"   : mp.Matrix
@@ -52,7 +48,13 @@ class Algorithm(mp.Matrix):
             pretty += f"S{i}:\n" + str(t) + "\n"
         return pretty
 
-    def populate(self, arg: Any) -> None:
+    # -- Refactor to new structure ------------ #
+    # >>> self.algorithm[x] = {                 #
+    # >>>     "template" : mp.Template          #
+    # >>>     "result"   : mp.Matrix            #
+    # >>>     "map"      : mp.Map               #
+    # >>> }                                     #
+    def populate(self, arg: Any) -> None: # --- #
         """
         Adds template(s) to an existing algorithm. All templates must be of
         consistent bitwidth.

@@ -12,10 +12,8 @@ v0.1
 ====
 
 
-.. _test:
-    https://github.com/EphraimCompEng/multipy/releases/tag/v0.1.1
 
-`v0.1.1 <test>`_
+`v0.1.1 <https://github.com/EphraimCompEng/multipy/releases/tag/v0.1.1>`_
 ~~~~~~~~~~~~~~~~~~
 
 This patch is focused on documentation and testing the api reference site locally

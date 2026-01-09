@@ -34,10 +34,6 @@ from .core.map import (
     resolve_rmap,
 )
 
-from .core.utils.char import (
-    ischar,
-)
-
 
 # -- datasets -----------------------------------
 
@@ -50,6 +46,17 @@ from .io.lazy_json import (
 )
 
 # from .io.parquet import()
+#
+
+# -- utils --------------------------------------
+from .core.utils.char import (
+    ischar,
+)
+
+
+from .core.utils.pretty import (
+    pprint,
+)
 
 # -- External -----------------------------------
 
@@ -93,7 +100,6 @@ __all__ = [
     'Template',
     'Algorithm',
     'Map',
-    'ischar',
     'build_dadda_map',
     'resolve_rmap',
     'build_simple_template',
@@ -103,6 +109,9 @@ __all__ = [
     'shallow_truth_table',
     'truth_table',
     'json_pretty_store',
+    'ischar',
+    'pprint',
+
 
 
 

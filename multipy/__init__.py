@@ -7,6 +7,7 @@ import toml_rs
 
 from .core.matrix import (
     Matrix,
+    Slice,
 )
 
 
@@ -55,6 +56,7 @@ from .core.utils.char import (
 
 
 from .core.utils.pretty import (
+    pretty,
     pprint,
 )
 
@@ -96,6 +98,7 @@ SUPPORTED_BITWIDTHS = {4, 8}
 
 __all__ = [
     'Matrix',
+    'Slice',
     'Pattern',
     'Template',
     'Algorithm',
@@ -110,6 +113,7 @@ __all__ = [
     'truth_table',
     'json_pretty_store',
     'ischar',
+    'pretty',
     'pprint',
 
 

@@ -26,36 +26,36 @@ def test_temp_build_csa4() -> None:
     slice  = mp.Matrix(4)
     slice  = list(slice.matrix[:3])
     my_slice = mp.build_csa('a', slice)
-    print(mp.Matrix.pretty(matrix4.matrix))
-    print(mp.Matrix.pretty(my_slice[0]))
-    print(mp.Matrix.pretty(my_slice[1]))
+    mp.pprint(matrix4.matrix)
+    mp.pprint(my_slice[0])
+    mp.pprint(my_slice[1])
 
 def test_temp_build_csa8() -> None:
     matrix8  = mp.Matrix(8)
     slice2  = mp.Matrix(8)
     slice2 = list(slice2.matrix[3:6])
     my_slice = mp.build_csa('b', slice2)
-    print(mp.Matrix.pretty(matrix8.matrix))
-    print(mp.Matrix.pretty(my_slice[0]))
-    print(mp.Matrix.pretty(my_slice[1]))
+    mp.pprint(matrix8.matrix)
+    mp.pprint(my_slice[0])
+    mp.pprint(my_slice[1])
 
 def test_temp_build_adder4() -> None:
     matrix4 = mp.Matrix(4)
     slice = mp.Matrix(4)
     slice = list(slice.matrix[2:])
     my_slice = mp.build_adder('a', slice)
-    print(mp.Matrix.pretty(matrix4.matrix))
-    print(mp.Matrix.pretty(my_slice[0]))
-    print(mp.Matrix.pretty(my_slice[1]))
+    mp.pprint(matrix4.matrix)
+    mp.pprint(my_slice[0])
+    mp.pprint(my_slice[1])
 
 def test_temp_build_adder8() -> None:
     matrix4 = mp.Matrix(8)
     slice = mp.Matrix(8)
     slice = list(slice.matrix[:2])
     my_slice = mp.build_adder('a', slice)
-    print(mp.Matrix.pretty(matrix4.matrix))
-    print(mp.Matrix.pretty(my_slice[0]))
-    print(mp.Matrix.pretty(my_slice[1]))
+    mp.pprint(matrix4.matrix)
+    mp.pprint(my_slice[0])
+    mp.pprint(my_slice[1])
 
 def main() -> None:
     test_temp_build_csa4()

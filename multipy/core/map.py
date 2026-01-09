@@ -1,14 +1,10 @@
-##################################
-# Map, Swap Bits Inside A Matrix #
-##################################
+############################
+# Map Bits Inside A Matrix #
+############################
 
 
 
-
-###
-# Simple maps move entire rows
-###
-
+# from multipy import ischar
 import multipy as mp
 from typing import Any
 
@@ -23,8 +19,8 @@ class Map:
         self.bits = bits
         if isinstance(map[0], list):
             self.map = map
-        else:
-            self.map = self.build_map(map)
+        elif isinstance(all(map), str):
+            self.rmap = self.build_map(map)
 
 
     def build_map(self, simple: list[Any]) -> object:
@@ -35,7 +31,7 @@ class Map:
 
         ...
 
-def build_simple_map(matrix: mp.Matrix, reversed: bool=False) -> object:
+def resolve_rmap(matrix: mp.Matrix, reversed: bool=False) -> object:
     """
     Find empty rows, create simple map to efficiently pack rows.
     Defaults to bottom unless reversed=True.

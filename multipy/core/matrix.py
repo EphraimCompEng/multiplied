@@ -5,6 +5,13 @@
 import multipy as mp
 from typing import Any
 
+class Slice:
+    """
+
+    """
+    def __init__(self, matrix: list[list[str]]):
+        self.slice =  matrix
+        self.bits  = len(self.slice[0][0]) >> 1
 
 class Matrix:
     def __init__(self, bits: int):
@@ -14,7 +21,7 @@ class Matrix:
         self.bits = bits
         self.matrix = self.__empty_matrix()
 
-    def __empty_matrix(self) -> list[list[Any]]:
+    def __empty_matrix(self) -> list[list[str]]:
         """
         Build a wallace tree style logic AND matrix for a bitwidth of self.bits.
         """
@@ -45,25 +52,11 @@ class Matrix:
                 matrix.append(["_"]*(i+1) + list(a) + ["_"]*(bits-i-1))
         return matrix, a, b # exposing operands for access as everthing uses generators
 
-    @classmethod
-    def pretty(cls, matrix: list[list[Any]]) -> str:
-        """
-        Format matrix as a string:
 
-        >>> ____0000
-        >>> ___0000_
-        >>> __0000__
-        >>> _0000___
-        """
-        pretty_ = ""
-        for i in matrix:
-            row = [str(x) for x in i]
-            pretty_ += "".join(row) + "\n"
-        return pretty_
 
 
     def __repr__(self) -> str:
-        return self.pretty(self.matrix)
+        return mp.pretty(self.matrix)
 
     def __str__(self) -> str:
         return str(self.__repr__())
@@ -71,8 +64,6 @@ class Matrix:
     def __len__(self) -> int:
         return self.bits
 
-    def __getitem__(self, index: int) -> list:
-        return self.matrix[index]
 
     def __eq__(self, matrix: Any, /) -> bool:
         if matrix.bits != self.bits:
@@ -81,3 +72,10 @@ class Matrix:
             if matrix[i] != self.matrix[i]:
                 return False
         return True
+
+    def __getslice__(self, start: int, stop: int) -> Slice:
+        slice = self.matrix[start:stop]
+        return mp.Slice(slice)
+
+    def __getitem__(self, index: int) -> Slice:
+        return mp.Slice([self.matrix[index]])

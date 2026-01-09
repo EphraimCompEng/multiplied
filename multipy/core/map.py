@@ -68,3 +68,13 @@ def build_dadda_map(bits) -> object:
     # ----------------------------------------------------------------------------------------- #
 
     return Map(dadda_map[bits], bits)
+
+
+def main():
+    m = mp.Matrix(2)
+    mp.pprint(m)
+
+
+
+if __name__ == "__main__":
+    main()

@@ -5,7 +5,7 @@
 ### Notes ###
 - add max_iter attribute to Algorithm class
 - add util/helper function to extract columns -> list 
-- add fumction to insert columns <- list
+- add function to insert columns <- list
 - 
 
 ~ latency can be added using decorators @latency
@@ -228,14 +228,75 @@ resultant = [         # check = [   # x1 = [_ _ d D] # roch = 2
 
 # -- template assisted reduction -----------------------------------------------
 
-Template assisted reduction(TAR) is a construct of a given reduction stage with a
-multiplication algorithm. 
+
+[ intro ]
+Template assisted reduction(TAR) is how MultiPy emulates combinstional multiplier
+algorithms.
+
+Below is the process of taking two operands and seeing how these operand bits
+propagate through a given multiplier algorithm. Initial MultiPy versions do not
+support booth encoding.
+
+[ algorithm flowchart (wip) ]
+
+```
+1)  and_matrix(a, b) --------> matrix
+
+________________________________________________
+
+2)  template -+-[r(t)]-------> rs_template
+              |
+    matrix ---+--------------> m_dict{char:unit}
+    
+________________________________________________
+
+3)  rs_template -+-[s(rs_t)]-> rel_map
+                 |
+                 +-[base]-+              
+                          |
+    m_dict ------[a(m_d)]-+--> premap_matrix
+    
+________________________________________________
+
+4)  rel_map -------+
+                   |
+        pm_matrix -+---------> reduced matrix
+    
+________________________________________________
+
+```
+
+key: 
+    a, b        = source operands of x bits
+    matrix      = partial products in matrix of size (x*2) * x
+    pm_matrix   = pre-mapped matrix
+    template    = abstract matrix using groups of characters as discrete arithmetic 
+                  units (t)
+    m_dict      = matrix dictionary (m_d)
+    rs_template = resultant smart template (rs_t)
+    rel_map     = relative map
+    Sbase        = row which represent non carried bits
 
 
+1) Generate partial products
+
+2) a. Use template to split partial products into arithmetic unit blocks
+   b. Transform [r(t)] template into resultant smart template (pre-built)
+   
+3) Use "base" of arithmetic units in the rs_template to position
+   each arithmetic unit's result in m_dict.
+
+4) Once results have been positioned, use the relative map values from rs_template
+   to correctly position partial products for next multiply stage
+ 
+[ simplified flowchart ]
 
 
-
-
-
-
+init Algorithm obj --?
+                    / \
+            pattern -> template --> resultant ---------> map
+                  |       |                 |              |
+                  slice   arithmetic unit   |              |
+                       \ /                  |              |
+init matrix ------------+-> m_dict ---------+-> pm_matrix -+-> reduced matrix
 

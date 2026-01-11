@@ -4,13 +4,13 @@
 
 ### Notes ###
 - add max_iter attribute to Algorithm class
-- add util/helper function to extract columns -> list 
-- add fumction to insert columns <- list
-- 
+- add util/helper function to extract columns -> list
+- add function to insert columns <- list
+-
 
 ~ latency can be added using decorators @latency
-  ~ decorate algorithm? truth table? Bedt way to define latency of all 
-    structures? 
+  ~ decorate algorithm? truth table? Bedt way to define latency of all
+    structures?
 
 # -- algorithm attributes ------------------------------------------------
 [ Creating self.algorithm ]{
@@ -18,52 +18,52 @@
     "matrix"   : mp.Matrix
     "map"      : mp.Map
 }
-      
-                 # :: Template  :: Complex Template       
+
+                 # :: Template  :: Complex Template
  Pattern:: Template:|:STemplate :: Smart Template
                     |
                RMap:|
                    :: RMap      :: Row Map
                  # :: Map       :: Complex Map
-     
+
 
 - Patters  -- Simplifies template creation by making a set of rows
               a single type of arithmetic unit.
-              
+
               Not retained, syntactic sugar for Template.
 - Template -- Defines placement of arithmetic units and their type
 
 - Map      -- Defines the vertical distances which bits move.
               Uses 2-bit signed hex values.
-              
+
 - Row Map  -- Defines the vertical distance which rows move. Uses
-              2-bit signed hex values. 
-              
+              2-bit signed hex values.
+
 - Smart T. -- Smart templates integrate maps and templates by using both
-              absolute distance, like map/row map, and references to 
+              absolute distance, like map/row map, and references to
               manipulate bit placement.
               Uses 2-bit signed hex values for absolute displacement:
               >>> "FF" == -1
               >>> "0A" == +10
-              
+
               Uses "*" symbol and 1-bit signed hex to referance a bit
               should move to it's position,
               >>> "*F" == "move bit -1 away to ref's position"
-              
+
               (More complex but saves designing 2 seperate objects.
-              Applies moreso for 16-bit+ as templates/maps become 
-              very large very fast) 
-              
+              Applies moreso for 16-bit+ as templates/maps become
+              very large very fast)
+
 
 
 # -- checksum ---------------------------------------------------------
 
 faster calculations:
 
-- Generate checksum? If 0? Vectors for all matricies to quickly find 
+- Generate checksum? If 0? Vectors for all matricies to quickly find
   errors or skip traversal:
-  
-  
+
+
 ```
 [ Creating mp.Matrix ]{
     self.matrix   = list[list[str]]
@@ -91,7 +91,7 @@ In addition, row maps can be directly generated from checksums
 # row map generated from Figure 2
 
 rmap = [        # resuting_checksum = [
-    '00',       #     1,  
+    '00',       #     1,
     '00',       #     1,
     'FF',       #     0,
     '00',       #     0,
@@ -103,7 +103,7 @@ rmap = [        # resuting_checksum = [
 In conclusion, checksums are a simple way to avoid unnecessary
 complete traversals of a matrix. Furthermore, When combined with
 map generation, checksums provide a vital path for making custom
-algorithms simper, especially for large bit widths. 
+algorithms simper, especially for large bit widths.
 
 
 # -- reduce -----------------------------------------------------------
@@ -141,9 +141,9 @@ is little on the reasoning behind the way they are implemented.
 The process of designing a non-standard multiplier stage by stage involves
 small tweaks, changes to one stage or a full change to the inital matrix
 (see Booth encoding). Each change effects the future stages, even if the
-final value remains constant. 
+final value remains constant.
 
-Automating the production of templates and maps gives the user a starting 
+Automating the production of templates and maps gives the user a starting
 point. Sidestepping all the time consuming parts of building a template.
 Possibly very large templates for 16-bit+ designs.
 
@@ -154,7 +154,7 @@ via a class method.
 
 Future plan includes complete evaluation using a heutistic approach. This
 method could be useful to build all templates as a starting point, Then
-add optimisations. 
+add optimisations.
 
 At 32-bit and 64-bit this is likely the only method to realistically load
 a "built-in" 32/64-bit+ multiplier. 16-bit is tne limit for hand creation
@@ -181,7 +181,7 @@ Without any checks outputs clash when arithmetic units are not uniform
 across entire rows. All bits of the arithmetic unit must be moved.
 
 [ solution ]
-This can be solved on a unit by unit basis. When an given arithmetic unit 
+This can be solved on a unit by unit basis. When an given arithmetic unit
 produces its resultant sub-template, any overlaps will force the victim
 of the overlap to vertically relocate.
 
@@ -194,7 +194,7 @@ MultiPy can solve this in two ways: template and map, or a unified smart map.
 
 [ intro ]
 
-Ideally, the auto generated template should be "smart", detecting that users 
+Ideally, the auto generated template should be "smart", detecting that users
 will likely map the sparce lower rows to the top two. Manually mapping partial
 products for 4-bit multipliers is trivial, this is not the case for higher
 bit widths.
@@ -205,13 +205,13 @@ Despite the challenge, checksums provide another opportunity to simplify
 the process. By using patterns within rows and columns, the production of
 smart maps can be automated.
 
-Using a checksum to find the lowest populated row. Then, a given matrix is 
+Using a checksum to find the lowest populated row. Then, a given matrix is
 traversed along it's columns, and all zeros are replaced with map reference
 values. colums with all zeros are igored. Columns with runs of:
 
-   char -> '_'*n -> char 
-   
-indicate gaps to be filled, Top border counts as char/non zero. 
+   char -> '_'*n -> char
+
+indicate gaps to be filled, Top border counts as char/non zero.
 
 ```
 resultant = [         # check = [   # x1 = [_ _ d D] # roch = 2
@@ -221,21 +221,81 @@ resultant = [         # check = [   # x1 = [_ _ d D] # roch = 2
     [_ D _ _ e _ _ _] #     [1]     #  # x2 :: -roch = -2 ; [*E  c  D  _]
 ]                     # ]           #  # x4 :: -roch = -1 ; [ B  b  e  _]
 
-                                    roch  = run of chars # starting from 
+                                    roch  = run of chars # starting from
                                             '_' -> char transition.
 ```
 
 
 # -- template assisted reduction -----------------------------------------------
 
-Template assisted reduction(TAR) is a construct of a given reduction stage with a
-multiplication algorithm. 
+
+[ intro ]
+Template assisted reduction(TAR) is how MultiPy emulates combinstional multiplier
+algorithms.
+
+Below is the process of taking two operands and seeing how these operand bits
+propagate through a given multiplier algorithm. Initial MultiPy versions do not
+support booth encoding.
+
+[ algorithm flowchart (wip) ]
+
+```
+1)  and_matrix(a, b) --------> matrix
+
+________________________________________________
+
+2)  template -+-[r(t)]-------> rs_template
+              |
+    matrix ---+--------------> m_dict{char:unit}
+
+________________________________________________
+
+3)  rs_template -+-[s(rs_t)]-> rel_map
+                 |
+                 +-[base]-+
+                          |
+    m_dict ------[a(m_d)]-+--> premap_matrix
+
+________________________________________________
+
+4)  rel_map -------+
+                   |
+        pm_matrix -+---------> reduced matrix
+
+________________________________________________
+
+```
+
+key:
+    a, b        = source operands of x bits
+    matrix      = partial products in matrix of size (x*2) * x
+    pm_matrix   = pre-mapped matrix
+    template    = abstract matrix using groups of characters as discrete arithmetic
+                  units (t)
+    m_dict      = matrix dictionary (m_d)
+    rs_template = resultant smart template (rs_t)
+    rel_map     = relative map
+    Sbase        = row which represent non carried bits
 
 
+1) Generate partial products
+
+2) a. Use template to split partial products into arithmetic unit blocks
+   b. Transform [r(t)] template into resultant smart template (pre-built)
+
+3) Use "base" of arithmetic units in the rs_template to position
+   each arithmetic unit's result in m_dict.
+
+4) Once results have been positioned, use the relative map values from rs_template
+   to correctly position partial products for next multiply stage
+
+[ simplified flowchart ]
 
 
-
-
-
-
-
+init Algorithm obj --?
+                    / \
+            pattern -> template --> resultant ---------> map
+                  |       |                 |              |
+                  slice   arithmetic unit   |              |
+                       \ /                  |              |
+init matrix ------------+-> m_dict ---------+-> pm_matrix -+-> reduced matrix

@@ -5,12 +5,12 @@
 
 The entire library functions via three structures: Algorithms which initialise a Matrix which are then subsequesntly reduced by templates.
 - [x] Algorithm, Matrix and Template classes formalised
-- [ ] Correctly implement custom Types. (Templates need work)
+- [x] Correctly implement custom Types. (Templates need work -- Slices implemented)
 - [x] simple templates 
 - [ ] Complex templates 
 - [ ] Simple reduction
 - [ ] Complex reduction
-- [ ] Simple row map
+- [x] Simple row map
 - [ ] Complete map matrix
 - [ ] Algorithm.state and .step()
 
@@ -26,17 +26,22 @@ Basic functionality; "simple templates", generate, analyse:
 - [x] Truth table generation -> json
 - [ ] Implement I/O via [Parquet](https://parquet.apache.org/)
 - [ ] Truth table generation -> Parquet
-- [ ] Basic analysis/visualisation of bit ranges]
 
 \* Note: once built-in functions and classes are operational, hand crafted templates and maps will be be functional.
 simple templates -> internally called patters, form -> complex templates.
+
+
+## IO
+- [ ] Basic analysis/visualisation of bit ranges]
+- [ ] Heatmaps? plots? Advanced visualisation
+
 
 ## Documentation
 
 - [x] Sphinx implementation
 - [x] Setup sphinx -> web based API reference
 - [ ] Setup Github Wiki? For theory / internal systems
-- [ ] Improve API ref site with nicer HTML/CSS
+- [x] Improve API ref site with nicer HTML/CSS
 - [ ] Add markdown(.md) Functionality to API ref
 - [ ] Complete user guide
 - [ ] Complete advanced guide
@@ -48,7 +53,6 @@ The sheer amount of data produced for 16-bit+ multiplier truth tables becomes as
 - [ ] Multiprocessing support to handle higher bit-widths
 - [ ] 16-bit unsaturated multiply
 - [ ] 16-bit saturated multiply
-- [ ] Heatmaps? plots? Advanced visualisation
 - [ ] Use [rust](https://github.com/PyO3/pyo3)? [numba](https://numba.pydata.org/)? for more performance?
 - [ ] Research if 32/64/128-bit multipliers can be analysed in a reasonable time (1min? 5min? ???)
 

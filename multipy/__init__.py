@@ -7,6 +7,8 @@ import toml_rs
 
 from .core.matrix import (
     Matrix,
+    Slice,
+    build_matrix,
 )
 
 
@@ -31,7 +33,18 @@ from .core.truth import (
 from .core.map import (
     Map,
     build_dadda_map,
-    build_simple_map,
+    resolve_rmap,
+)
+
+# -- utils --------------------------------------
+from .core.utils.char import (
+    ischar,
+)
+
+
+from .core.utils.pretty import (
+    pretty,
+    mprint,
 )
 
 # -- datasets -----------------------------------
@@ -45,6 +58,8 @@ from .io.lazy_json import (
 )
 
 # from .io.parquet import()
+#
+
 
 # -- External -----------------------------------
 
@@ -84,12 +99,13 @@ SUPPORTED_BITWIDTHS = {4, 8}
 
 __all__ = [
     'Matrix',
+    'Slice',
+    'build_matrix',
     'Pattern',
     'Template',
     'Algorithm',
-    'Map',
     'build_dadda_map',
-    'build_simple_map',
+    'resolve_rmap',
     'build_simple_template',
     'build_csa',
     'build_adder',
@@ -97,6 +113,15 @@ __all__ = [
     'shallow_truth_table',
     'truth_table',
     'json_pretty_store',
+    'Map',
+    'ischar',
+    'pretty',
+    'mprint',
+    'MP_VERSION',
+    'SUPPORTED_BITWIDTHS',
+
+
+
 
     # 'test_pop_empty_matrix',
     # 'test_pop_build_matrix',

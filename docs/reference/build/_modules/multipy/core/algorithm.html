@@ -12,8 +12,8 @@
       .bz-js-only { display: none !important; }
     </style>
   </noscript>
-
-    <script defer src="../../../_static/documentation_options.js?v=a58bc63e"></script>
+  
+    <script defer src="../../../_static/documentation_options.js?v=938c9ccc"></script>
     <script defer src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script defer src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer src="../../../_static/scripts/breeze.js?v=8ef74970"></script>
@@ -31,7 +31,7 @@
     <link rel="search" title="Search" href="../../../search.html" /><meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   </head><body>
-
+  
   <div class="bz-skip-to-content">
     <a href="#bz-main-content">Skip to main content</a>
   </div><header class="bz-header-main">
@@ -124,8 +124,8 @@
     <ul role="menu" aria-hidden="true"></ul>
   </div>
 </nav><div class="bz-content"><main id="bz-main-content"><header class="bz-article-header">
-
-
+  
+  
     <nav class="bz-breadcrumbs" aria-label="Breadcrumb">
   <ol>
     <li class="bz-breadcrumbs-home">
@@ -149,7 +149,7 @@
     </li>
   </ol>
 </nav>
-
+  
 
   <label
     class="bz-sidebar-secondary-toggle"
@@ -198,6 +198,16 @@
 <span class="sd">    this matrix with partial products.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pattern only implementation -- small steps:</span>
+
+<span class="sd">        &gt; detect pattern inside Template object</span>
+<span class="sd">        &gt; Slice matrix(data) along pattern &quot;runs&quot;</span>
+<span class="sd">        &gt; reduce slices</span>
+<span class="sd">        &gt; unify slices</span>
+<span class="sd">        &gt; apply row map</span>
+<span class="sd">        &gt; update Algorithm object state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">mp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bits</span>      <span class="o">=</span> <span class="mi">0</span>
@@ -206,7 +216,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span>    <span class="o">=</span> <span class="n">matrix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span>    <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Structure of algorithm:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Structure of a given algorithm stage:</span>
 <span class="sd">        &gt;&gt;&gt; self.algorithm[x] = {</span>
 <span class="sd">        &gt;&gt;&gt;     &quot;template&quot; : mp.Template</span>
 <span class="sd">        &gt;&gt;&gt;     &quot;result&quot;   : mp.Matrix</span>
@@ -237,7 +247,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">Template</span><span class="p">):</span> <span class="c1"># warp matrix in list to reuse code</span>
-            <span class="n">arg</span> <span class="o">=</span> <span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="c1"># list(arg) throws error -- implement __iter___?</span>
+            <span class="n">arg</span> <span class="o">=</span> <span class="p">[</span><span class="n">arg</span><span class="p">]</span>
         <span class="k">elif</span> <span class="ow">not</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">arg</span><span class="p">),</span> <span class="nb">list</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid argument type. Expected list[Matrix] or Matrix.&quot;</span><span class="p">)</span>
 
@@ -251,11 +261,11 @@
 
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Helper function to step through a single stage of an algorithm</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="o">...</span>
+    <span class="c1"># def _reduce(self):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Helper function to step through a single stage of an algorithm</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     ...</span>
 
 <div class="viewcode-block" id="Algorithm.truth">
 <a class="viewcode-back" href="../../../api/multipy.core.html#multipy.Algorithm.truth">[docs]</a>
@@ -272,13 +282,14 @@
         <span class="o">...</span></div>
 
 
-    <span class="c1"># Used to</span>
+    <span class="c1"># Used to automate splitting a matrix into Slice(n * row)</span>
 <div class="viewcode-block" id="Algorithm.split">
 <a class="viewcode-back" href="../../../api/multipy.core.html#multipy.Algorithm.split">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">mp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">,</span> <span class="n">rows</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns list of slices via progressive allocation.</span>
+<span class="sd">        Returns list of slices via progressive allocation. Used to automate</span>
+<span class="sd">        slicing a matrix into (Slice(n * row) * k), then splitting remainder</span>
 
 <span class="sd">        Append n contiguous slices of matrix, each containing x rows.</span>
 <span class="sd">        If not enough rows, progress to rows-1 -&gt; row-2 -&gt; ...</span>
@@ -304,18 +315,18 @@
 
 </pre></div>
 </article><footer class="bz-article-footer">
-
-
+  
+  
     <nav class="bz-related-pages" aria-label="Related pages navigation"></nav>
-
+  
 
 </footer></main>
   </div><footer class="bz-footer">
   <div class="bz-footer-copyright"><p class="bz-copyright">© Copyright 2025, Ephraim M.</p><p>
     Made with
-
+    
     <a href="https://www.sphinx-doc.org/">Sphinx</a> and
-
+    
     <a href="https://github.com/aksiome/breeze">Breeze theme</a>.
   </p>
 </div><div class="bz-external-links">

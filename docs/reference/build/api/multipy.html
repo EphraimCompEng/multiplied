@@ -19,8 +19,8 @@
       .bz-js-only { display: none !important; }
     </style>
   </noscript>
-
-    <script defer src="../_static/documentation_options.js?v=a58bc63e"></script>
+  
+    <script defer src="../_static/documentation_options.js?v=938c9ccc"></script>
     <script defer src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script defer src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer src="../_static/scripts/breeze.js?v=8ef74970"></script>
@@ -38,7 +38,7 @@
     <link rel="search" title="Search" href="../search.html" /><meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   </head><body>
-
+  
   <div class="bz-skip-to-content">
     <a href="#bz-main-content">Skip to main content</a>
   </div><header class="bz-header-main">
@@ -131,19 +131,19 @@
     <ul role="menu" aria-hidden="true"></ul>
   </div>
 </nav><div class="bz-content"><aside class="bz-sidebar-primary" data-drawer="bz-sidebar-primary">
-
-
+  
+  
     <nav class="bz-sidebar-nav" aria-label="Section Navigation"><ul>
 <li class="toctree-l1"><a class="reference internal" href="multipy.core.html">multipy.core package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multipy.datasets.html">multipy.datasets package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multipy.io.html">multipy.io package</a></li>
 </ul>
 </nav>
-
+  
 
 </aside><main id="bz-main-content"><header class="bz-article-header">
-
-
+  
+  
     <nav class="bz-breadcrumbs" aria-label="Breadcrumb">
   <ol>
     <li class="bz-breadcrumbs-home">
@@ -165,7 +165,7 @@
     </li>
   </ol>
 </nav>
-
+  
 
   <label
     class="bz-sidebar-secondary-toggle"
@@ -210,15 +210,13 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.map.build_dadda_map"><code class="docutils literal notranslate"><span class="pre">build_dadda_map()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.map.build_simple_map"><code class="docutils literal notranslate"><span class="pre">build_simple_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.map.resolve_rmap"><code class="docutils literal notranslate"><span class="pre">resolve_rmap()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="multipy.core.html#module-multipy.core.matrix">multipy.core.matrix module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix"><code class="docutils literal notranslate"><span class="pre">Matrix</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix.build_matrix"><code class="docutils literal notranslate"><span class="pre">Matrix.build_matrix()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix.pretty"><code class="docutils literal notranslate"><span class="pre">Matrix.pretty()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix"><code class="docutils literal notranslate"><span class="pre">Matrix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice"><code class="docutils literal notranslate"><span class="pre">Slice</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.build_matrix"><code class="docutils literal notranslate"><span class="pre">build_matrix()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="multipy.core.html#module-multipy.core.template">multipy.core.template module</a><ul>
@@ -271,7 +269,7 @@ this matrix with partial products.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="multipy.Algorithm.algorithm">
 <span class="sig-name descname"><span class="pre">algorithm</span></span><a class="headerlink" href="#multipy.Algorithm.algorithm" title="Link to this definition">#</a></dt>
-<dd><p>Structure of algorithm:
+<dd><p>Structure of a given algorithm stage:
 &gt;&gt;&gt; self.algorithm[x] = {
 &gt;&gt;&gt;     “template” : mp.Template
 &gt;&gt;&gt;     “result”   : mp.Matrix
@@ -302,7 +300,8 @@ consistent bitwidth.</p>
 </dl>
 
 <span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/algorithm.html#Algorithm.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Algorithm.split" title="Link to this definition">#</a></dt>
-<dd><p>Returns list of slices via progressive allocation.</p>
+<dd><p>Returns list of slices via progressive allocation. Used to automate
+slicing a matrix into (Slice(n * row) * k), then splitting remainder</p>
 <p>Append n contiguous slices of matrix, each containing x rows.
 If not enough rows, progress to rows-1 -&gt; row-2 -&gt; …</p>
 </dd></dl>
@@ -329,12 +328,12 @@ If not enough rows, progress to rows-1 -&gt; row-2 -&gt; …</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="multipy.Map">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">Map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/map.html#Map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Map" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">Map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/map.html#Map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Map" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="multipy.Map.build_map">
-<span class="sig-name descname"><span class="pre">build_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="../_modules/multipy/core/map.html#Map.build_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Map.build_map" title="Link to this definition">#</a></dt>
-<dd><p>Use simple map to generate standard map. Each element of simple map
+<span class="sig-name descname"><span class="pre">build_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multipy/core/map.html#Map.build_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Map.build_map" title="Link to this definition">#</a></dt>
+<dd><p>Use row map to generate standard map. Each element of simple map
 is a 2-bit, signed hex value. +ve = up, -ve = down.</p>
 </dd></dl>
 
@@ -342,39 +341,19 @@ is a 2-bit, signed hex value. +ve = up, -ve = down.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="multipy.Matrix">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/matrix.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Matrix" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/matrix.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Matrix" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="multipy.Matrix.build_matrix">
-<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">build_matrix</span></span><span class="sig-paren">(</span>
-
-<dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">operand_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">operand_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
-</dl>
-
-<span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/matrix.html#Matrix.build_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Matrix.build_matrix" title="Link to this definition">#</a></dt>
-<dd><p>Build Logical AND matrix using source operands.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="multipy.Matrix.pretty">
-<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">pretty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/multipy/core/matrix.html#Matrix.pretty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Matrix.pretty" title="Link to this definition">#</a></dt>
-<dd><p>Format matrix as a string:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">____0000</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">___0000_</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">__0000__</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_0000___</span>
-</pre></div>
-</div>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="multipy.Pattern">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">Pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/template.html#Pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Pattern" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="multipy.Slice">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">Slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/matrix.html#Slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Slice" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
@@ -393,7 +372,7 @@ is a 2-bit, signed hex value. +ve = up, -ve = down.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="multipy.Template.merge">
 <span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">templates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/multipy/core/template.html#Template.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.Template.merge" title="Link to this definition">#</a></dt>
-<dd><p>Merge multiple templates into a single template.</p>
+<dd><p>Merge multiple template slices into a single template.</p>
 </dd></dl>
 
 </dd></dl>
@@ -404,14 +383,15 @@ is a 2-bit, signed hex value. +ve = up, -ve = down.</p>
 
 <dl>
 <dd><em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">template_slice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">zeroed_slice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice" title="multipy.core.matrix.Slice"><span class="pre">Slice</span></a></span></em>,</dd>
 </dl>
 
-<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multipy/core/template.html#build_adder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_adder" title="Link to this definition">#</a></dt>
-<dd><p>Returns template “slices” for addition and the resulting slice.</p>
-<p>[slice ] || [adder-] || [result]
-___0000_ || ___aAaA_ || _aAaAaA_
-__0000__ || __AaAa__ || ________</p>
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice" title="multipy.core.matrix.Slice"><span class="pre">Slice</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice" title="multipy.core.matrix.Slice"><span class="pre">Slice</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multipy/core/template.html#build_adder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_adder" title="Link to this definition">#</a></dt>
+<dd><p>Create CSA template slice with zero initialised slice and chosen char.
+Returns template “slices” for addition and the resulting slice.</p>
+<p>[slice ] || [adder-] || [result]</p>
+<p>___0000_ || ___aAaA_ || _aAaAaA_</p>
+<p>__0000__ || __AaAa__ || ________</p>
 </dd></dl>
 
 <dl class="py function">
@@ -420,35 +400,36 @@ __0000__ || __AaAa__ || ________</p>
 
 <dl>
 <dd><em class="sig-param"><span class="n"><span class="pre">char</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">template_slice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">zeroed_slice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice" title="multipy.core.matrix.Slice"><span class="pre">Slice</span></a></span></em>,</dd>
 </dl>
 
-<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multipy/core/template.html#build_csa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_csa" title="Link to this definition">#</a></dt>
-<dd><p>Returns template “slices” for a csa reduction and the resulting slice.</p>
-<p>[slice-] || [csa—] || [result]
-____0000 || ____AaAa || __AaAaAa
-___0000_ || ___aAaA_ || __aAaA__
-__0000__ || __AaAa__ || ________</p>
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice" title="multipy.core.matrix.Slice"><span class="pre">Slice</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Slice" title="multipy.core.matrix.Slice"><span class="pre">Slice</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/multipy/core/template.html#build_csa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_csa" title="Link to this definition">#</a></dt>
+<dd><p>Create CSA template slice with zero initialised slice and chosen char.
+Returns template “slices” for a csa reduction and the resulting slice.</p>
+<p>[slice-] || [csa—] || [result]</p>
+<p>____0000 || ____AaAa || __AaAaAa</p>
+<p>___0000_ || ___aAaA_ || __aAaA__</p>
+<p>__0000__ || __AaAa__ || ________</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="multipy.build_dadda_map">
-<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">build_dadda_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="../_modules/multipy/core/map.html#build_dadda_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_dadda_map" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">build_dadda_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="multipy.core.html#multipy.core.map.Map" title="multipy.core.map.Map"><span class="pre">Map</span></a></span></span><a class="reference internal" href="../_modules/multipy/core/map.html#build_dadda_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_dadda_map" title="Link to this definition">#</a></dt>
 <dd><p>Return map which represents starting point of Dadda tree algorithm.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="multipy.build_simple_map">
-<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">build_simple_map</span></span><span class="sig-paren">(</span>
+<dt class="sig sig-object py" id="multipy.build_matrix">
+<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">build_matrix</span></span><span class="sig-paren">(</span>
 
 <dl>
-<dd><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix" title="multipy.core.matrix.Matrix"><span class="pre">Matrix</span></a></span></em>,</dd>
-<dd><em class="sig-param"><span class="n"><span class="pre">reversed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">operand_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">operand_b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
+<dd><em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>,</dd>
 </dl>
 
-<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="../_modules/multipy/core/map.html#build_simple_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_simple_map" title="Link to this definition">#</a></dt>
-<dd><p>Find empty rows, create simple map to efficiently pack rows.
-Defaults to bottom unless reversed=True.</p>
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix" title="multipy.core.matrix.Matrix"><span class="pre">Matrix</span></a></span></span><a class="reference internal" href="../_modules/multipy/core/matrix.html#build_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.build_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Build Logical AND matrix using source operands.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -457,12 +438,18 @@ Defaults to bottom unless reversed=True.</p>
 <dd><p>Build a simple template for a given bitwidth.
 &gt;&gt;&gt; self.bits = 4
 &gt;&gt;&gt; build_template(self.pattern)</p>
-<p>matrix = [                         # pattern = [</p>
-<p>[‘_’,’_’,’_’,’_’,’A’,’a’,’A’,’a’], # ‘a’,</p>
-<p>[‘_’,’_’,’_’,’A’,’a’,’A’,’a’,’_’], # ‘a’,</p>
-<p>[‘_’,’_’,’B’,’b’,’B’,’b’,’_’,’_’], # ‘b’,</p>
-<p>[‘_’,’B’,’b’,’B’,’b’,’_’,’_’,’_’], # ‘b’]</p>
+<p>matrix = [  # pattern = [</p>
+<p>[____AaAa], #  ‘a’,</p>
+<p>[___AaAa_], #  ‘a’,</p>
+<p>[__BbBb__], #  ‘b’,</p>
+<p>[_BbBb___], #  ‘b’]</p>
 <p>]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="multipy.ischar">
+<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">ischar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/multipy/core/utils/char.html#ischar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.ischar" title="Link to this definition">#</a></dt>
+<dd><p>Tests if a string is exactly one alphabetic character</p>
 </dd></dl>
 
 <dl class="py function">
@@ -479,6 +466,37 @@ Defaults to bottom unless reversed=True.</p>
 <div><p>Format objects produced by generator then send to a JSON file using</p>
 </div></blockquote>
 <p>a context manager.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="multipy.mprint">
+<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">mprint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/multipy/core/utils/pretty.html#mprint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.mprint" title="Link to this definition">#</a></dt>
+<dd><p>Print formatted Matrix object</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="multipy.pretty">
+<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">pretty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listy_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/multipy/core/utils/pretty.html#pretty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.pretty" title="Link to this definition">#</a></dt>
+<dd><p>Format matrix as a string:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">____0000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">___0000_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__0000__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_0000___</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="multipy.resolve_rmap">
+<span class="sig-prename descclassname"><span class="pre">multipy.</span></span><span class="sig-name descname"><span class="pre">resolve_rmap</span></span><span class="sig-paren">(</span>
+
+<dl>
+<dd><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="multipy.core.html#multipy.core.matrix.Matrix" title="multipy.core.matrix.Matrix"><span class="pre">Matrix</span></a></span></em>,</dd>
+</dl>
+
+<span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="multipy.core.html#multipy.core.map.Map" title="multipy.core.map.Map"><span class="pre">Map</span></a></span></span><a class="reference internal" href="../_modules/multipy/core/map.html#resolve_rmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#multipy.resolve_rmap" title="Link to this definition">#</a></dt>
+<dd><p>Find empty rows, create simple map to efficiently pack rows.
+Defaults to bottom unless reversed=True.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -529,14 +547,14 @@ set of operands a, b.</p>
 </section>
 
 </article><footer class="bz-article-footer">
-
-
+  
+  
     <nav class="bz-related-pages" aria-label="Related pages navigation"></nav>
-
+  
 
 </footer><aside class="bz-sidebar-secondary" data-drawer="bz-sidebar-secondary">
-
-
+  
+  
     <nav class="bz-sidebar-toc" aria-label="Table of contents">
   <p>
     <svg
@@ -572,12 +590,9 @@ set of operands a, b.</p>
 <li><a class="reference internal" href="#multipy.Map.build_map"><code class="docutils literal notranslate"><span class="pre">Map​.build_​map()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#multipy.Matrix"><code class="docutils literal notranslate"><span class="pre">Matrix</span></code></a><ul>
-<li><a class="reference internal" href="#multipy.Matrix.build_matrix"><code class="docutils literal notranslate"><span class="pre">Matrix​.build_​matrix()</span></code></a></li>
-<li><a class="reference internal" href="#multipy.Matrix.pretty"><code class="docutils literal notranslate"><span class="pre">Matrix​.pretty()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#multipy.Matrix"><code class="docutils literal notranslate"><span class="pre">Matrix</span></code></a></li>
 <li><a class="reference internal" href="#multipy.Pattern"><code class="docutils literal notranslate"><span class="pre">Pattern</span></code></a></li>
+<li><a class="reference internal" href="#multipy.Slice"><code class="docutils literal notranslate"><span class="pre">Slice</span></code></a></li>
 <li><a class="reference internal" href="#multipy.Template"><code class="docutils literal notranslate"><span class="pre">Template</span></code></a><ul>
 <li><a class="reference internal" href="#multipy.Template.merge"><code class="docutils literal notranslate"><span class="pre">Template​.merge()</span></code></a></li>
 </ul>
@@ -585,35 +600,39 @@ set of operands a, b.</p>
 <li><a class="reference internal" href="#multipy.build_adder"><code class="docutils literal notranslate"><span class="pre">build_​adder()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.build_csa"><code class="docutils literal notranslate"><span class="pre">build_​csa()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.build_dadda_map"><code class="docutils literal notranslate"><span class="pre">build_​dadda_​map()</span></code></a></li>
-<li><a class="reference internal" href="#multipy.build_simple_map"><code class="docutils literal notranslate"><span class="pre">build_​simple_​map()</span></code></a></li>
+<li><a class="reference internal" href="#multipy.build_matrix"><code class="docutils literal notranslate"><span class="pre">build_​matrix()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.build_simple_template"><code class="docutils literal notranslate"><span class="pre">build_​simple_​template()</span></code></a></li>
+<li><a class="reference internal" href="#multipy.ischar"><code class="docutils literal notranslate"><span class="pre">ischar()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.json_pretty_store"><code class="docutils literal notranslate"><span class="pre">json_​pretty_​store()</span></code></a></li>
+<li><a class="reference internal" href="#multipy.mprint"><code class="docutils literal notranslate"><span class="pre">mprint()</span></code></a></li>
+<li><a class="reference internal" href="#multipy.pretty"><code class="docutils literal notranslate"><span class="pre">pretty()</span></code></a></li>
+<li><a class="reference internal" href="#multipy.resolve_rmap"><code class="docutils literal notranslate"><span class="pre">resolve_​rmap()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.shallow_truth_table"><code class="docutils literal notranslate"><span class="pre">shallow_​truth_​table()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.truth_scope"><code class="docutils literal notranslate"><span class="pre">truth_​scope()</span></code></a></li>
 <li><a class="reference internal" href="#multipy.truth_table"><code class="docutils literal notranslate"><span class="pre">truth_​table()</span></code></a></li>
 </ul>
 </li>
 </ul></nav>
-
+  
     <div class="bz-edit-this-page">
-  <a href="None">
+  <a href="https://github.com/EphraimCompEng/multipy/edit/main/api/multipy.rst">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="sized" fill="currentColor"">
       <path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"></path>
     </svg>
     Edit this page
   </a>
 </div>
-
-
-
+  
+    
+  
 
 </aside></main>
   </div><footer class="bz-footer">
   <div class="bz-footer-copyright"><p class="bz-copyright">© Copyright 2025, Ephraim M.</p><p>
     Made with
-
+    
     <a href="https://www.sphinx-doc.org/">Sphinx</a> and
-
+    
     <a href="https://github.com/aksiome/breeze">Breeze theme</a>.
   </p>
 </div><div class="bz-external-links">

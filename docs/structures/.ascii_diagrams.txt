@@ -67,3 +67,17 @@
 _ 0 1  > || 00 02 01 || >  _ 1 _
 0 1 _  > || 00 FF 00 || >  0 _ 1
 _ _ _  > || 00 00 00 || >  _ 0 _
+
+
+
+
+# -- algorithm flowchart ------------------------
+
+
+init Algorithm obj --?
+                    / \
+            pattern -> template --> resultant ---------> map
+                  |       |                 |              |
+                  slice   arithmetic unit   |              |
+                       \ /                  |              |
+init matrix ------------+-> m_dict ---------+-> pm_matrix -+-> reduced matrix

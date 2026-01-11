@@ -3,20 +3,11 @@
 ################################################
 
 from typing import Any
+from .utils.char import ischar
 import multipy as mp
 import copy
 
 
-# move to _utils?
-def _ischar(ch:str) -> bool:
-    """
-    Tests if a string is exactly one alphabetic character
-    """
-    try:
-        ord(ch)
-        return True
-    except (ValueError, TypeError):
-        return False
 
 
 def build_simple_template(pattern: list[str]) -> list[list[str]]:
@@ -25,11 +16,11 @@ def build_simple_template(pattern: list[str]) -> list[list[str]]:
     >>> self.bits = 4
     >>> build_template(self.pattern)
 
-    matrix = [                         # pattern = [\n
-    ['_','_','_','_','A','a','A','a'], # 'a',\n
-    ['_','_','_','A','a','A','a','_'], # 'a',\n
-    ['_','_','B','b','B','b','_','_'], # 'b',\n
-    ['_','B','b','B','b','_','_','_'], # 'b']\n
+    matrix = [  # pattern = [\n
+    [____AaAa], #  'a',\n
+    [___AaAa_], #  'a',\n
+    [__BbBb__], #  'b',\n
+    [_BbBb___], #  'b']\n
     ]
     """
     matrix = []
@@ -39,22 +30,23 @@ def build_simple_template(pattern: list[str]) -> list[list[str]]:
 # Defining a new Template type for list[list[Any]] would be useful?
 
 def build_csa(
-    char: str, template_slice: list[list[Any]]
-) -> tuple[list, list]: # Carry Save Adder -> (template, result)
+    char: str, zeroed_slice: mp.Slice
+) -> tuple[mp.Slice, mp.Slice]: # Carry Save Adder -> (template, result)
     """
+    Create CSA template slice with zero initialised slice and chosen char.
     Returns template "slices" for a csa reduction and the resulting slice.\n
-    [slice-] || [csa---] || [result]
-    ____0000 || ____AaAa || __AaAaAa
-    ___0000_ || ___aAaA_ || __aAaA__
-    __0000__ || __AaAa__ || ________
+    [slice-] || [csa---] || [result]\n
+    ____0000 || ____AaAa || __AaAaAa\n
+    ___0000_ || ___aAaA_ || __aAaA__\n
+    __0000__ || __AaAa__ || ________\n
     """
-    if len(template_slice) != 3:
+    if len(zeroed_slice) != 3:
         raise ValueError("Invalid template slice: must be 3 rows")
 
     # loop setup
-    n = len(template_slice[0])
-    result = [['_']*n, ['_']*n]
-    csa_slice = copy.copy(template_slice)
+    n = len(zeroed_slice[0])
+    result = [['_']*n, ['_']*n, ['_']*n]
+    csa_slice = copy.copy(zeroed_slice)
     tff = char == char.lower() # Toggle flip flop
     for i in range(n):
         # For int in template slice, map possible CSA operands to adder_slice
@@ -68,25 +60,26 @@ def build_csa(
         result[1][i-1]  = char if 1 <  (y0+y1+y2) else '_'
         tff  = not(tff) # True -> False -> True...
         char = char.lower() if tff else char.upper()
-    return csa_slice, result
+    return csa_slice, mp.Slice(result)
 
 
 def build_adder(
-    char: str, template_slice: list[list[Any]]
-) -> tuple[list, list]: # Carry Save Adder -> (template, result)
+    char: str, zeroed_slice: mp.Slice
+) -> tuple[mp.Slice, mp.Slice]: # Carry Save Adder -> (template, result)
     """
+    Create CSA template slice with zero initialised slice and chosen char.
     Returns template "slices" for addition and the resulting slice.\n
-    [slice ] || [adder-] || [result]
-    ___0000_ || ___aAaA_ || _aAaAaA_
-    __0000__ || __AaAa__ || ________
+    [slice ] || [adder-] || [result]\n
+    ___0000_ || ___aAaA_ || _aAaAaA_\n
+    __0000__ || __AaAa__ || ________\n
     """
-    if len(template_slice) != 2:
+    if len(zeroed_slice) != 2:
         raise ValueError("Invalid template slice: must be 2 rows")
 
     # loop setup
-    n = len(template_slice[0])
-    result = [['_']*n]
-    adder_slice = copy.copy(template_slice) # ensure no references
+    n = len(zeroed_slice[0])
+    result = [['_']*n, ['_']*n]
+    adder_slice = copy.copy(zeroed_slice) # ensure no references
 
     # -- TODO ------------------------------------------------------ #
     # tff + char startegy can be replace with an infinite generator: #
@@ -119,7 +112,7 @@ def build_adder(
 
 class Pattern:
     def __init__(self, pattern: list[str]):
-        assert isinstance(pattern, list) and all(_ischar(row) for row in pattern), (
+        assert isinstance(pattern, list) and all(ischar(row) for row in pattern), (
             "Error: Invalid pattern format. Expected list[char]"
         )
         self.pattern = pattern
@@ -135,26 +128,28 @@ class Template:
     # cell = (ch for ch in string.ascii_lowercase)
 
     def __init__(self, template: list[Any], result: Any = None, map: Any = None): # Complex or simple
-        valid_range  = mp.SUPPORTED_BITWIDTHS
+        from .. import SUPPORTED_BITWIDTHS
+        valid_range  = SUPPORTED_BITWIDTHS
         self.len     = len(template)
         self.map     = map
         self.result  = result
         self.pattern = None
+        self.template = None
 
 
         # length of any template represents it's bitwidth
         if len(template) not in valid_range:
             raise ValueError(f"Valid bit lengths: {valid_range}")
-        if _ischar(template[0]):
+        if ischar(template[0]):
             self.pattern  = template
             self.template, self.result = build_simple_template(template)
-        elif _ischar(template[0][0]):
+        elif ischar(template[0][0]):
             self.template = template
             self.merged = None
 
     def merge(self, templates: list[Any]) -> None:
         """
-        Merge multiple templates into a single template.
+        Merge multiple template slices into a single template.
         """
         assert isinstance(templates, list)
         # This looks terrible... Works tho?
@@ -167,6 +162,12 @@ class Template:
 
         self.merged = None # PLACEHOLDER #
         ...
+
+
+
+
+
+
 
 
 

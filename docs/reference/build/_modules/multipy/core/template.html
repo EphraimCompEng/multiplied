@@ -12,8 +12,8 @@
       .bz-js-only { display: none !important; }
     </style>
   </noscript>
-
-    <script defer src="../../../_static/documentation_options.js?v=a58bc63e"></script>
+  
+    <script defer src="../../../_static/documentation_options.js?v=938c9ccc"></script>
     <script defer src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script defer src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script defer src="../../../_static/scripts/breeze.js?v=8ef74970"></script>
@@ -31,7 +31,7 @@
     <link rel="search" title="Search" href="../../../search.html" /><meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
   </head><body>
-
+  
   <div class="bz-skip-to-content">
     <a href="#bz-main-content">Skip to main content</a>
   </div><header class="bz-header-main">
@@ -124,8 +124,8 @@
     <ul role="menu" aria-hidden="true"></ul>
   </div>
 </nav><div class="bz-content"><main id="bz-main-content"><header class="bz-article-header">
-
-
+  
+  
     <nav class="bz-breadcrumbs" aria-label="Breadcrumb">
   <ol>
     <li class="bz-breadcrumbs-home">
@@ -149,7 +149,7 @@
     </li>
   </ol>
 </nav>
-
+  
 
   <label
     class="bz-sidebar-secondary-toggle"
@@ -175,20 +175,11 @@
 <span class="c1">################################################</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils.char</span><span class="w"> </span><span class="kn">import</span> <span class="n">ischar</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">multipy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 
 
-<span class="c1"># move to _utils?</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_ischar</span><span class="p">(</span><span class="n">ch</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Tests if a string is exactly one alphabetic character</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
 
 
 <div class="viewcode-block" id="build_simple_template">
@@ -199,11 +190,11 @@
 <span class="sd">    &gt;&gt;&gt; self.bits = 4</span>
 <span class="sd">    &gt;&gt;&gt; build_template(self.pattern)</span>
 
-<span class="sd">    matrix = [                         # pattern = [\n</span>
-<span class="sd">    [&#39;_&#39;,&#39;_&#39;,&#39;_&#39;,&#39;_&#39;,&#39;A&#39;,&#39;a&#39;,&#39;A&#39;,&#39;a&#39;], # &#39;a&#39;,\n</span>
-<span class="sd">    [&#39;_&#39;,&#39;_&#39;,&#39;_&#39;,&#39;A&#39;,&#39;a&#39;,&#39;A&#39;,&#39;a&#39;,&#39;_&#39;], # &#39;a&#39;,\n</span>
-<span class="sd">    [&#39;_&#39;,&#39;_&#39;,&#39;B&#39;,&#39;b&#39;,&#39;B&#39;,&#39;b&#39;,&#39;_&#39;,&#39;_&#39;], # &#39;b&#39;,\n</span>
-<span class="sd">    [&#39;_&#39;,&#39;B&#39;,&#39;b&#39;,&#39;B&#39;,&#39;b&#39;,&#39;_&#39;,&#39;_&#39;,&#39;_&#39;], # &#39;b&#39;]\n</span>
+<span class="sd">    matrix = [  # pattern = [\n</span>
+<span class="sd">    [____AaAa], #  &#39;a&#39;,\n</span>
+<span class="sd">    [___AaAa_], #  &#39;a&#39;,\n</span>
+<span class="sd">    [__BbBb__], #  &#39;b&#39;,\n</span>
+<span class="sd">    [_BbBb___], #  &#39;b&#39;]\n</span>
 <span class="sd">    ]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">matrix</span> <span class="o">=</span> <span class="p">[]</span>
@@ -216,22 +207,23 @@
 <div class="viewcode-block" id="build_csa">
 <a class="viewcode-back" href="../../../api/multipy.core.html#multipy.build_csa">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">build_csa</span><span class="p">(</span>
-    <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">template_slice</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span> <span class="c1"># Carry Save Adder -&gt; (template, result)</span>
+    <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">zeroed_slice</span><span class="p">:</span> <span class="n">mp</span><span class="o">.</span><span class="n">Slice</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Slice</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">Slice</span><span class="p">]:</span> <span class="c1"># Carry Save Adder -&gt; (template, result)</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create CSA template slice with zero initialised slice and chosen char.</span>
 <span class="sd">    Returns template &quot;slices&quot; for a csa reduction and the resulting slice.\n</span>
-<span class="sd">    [slice-] || [csa---] || [result]</span>
-<span class="sd">    ____0000 || ____AaAa || __AaAaAa</span>
-<span class="sd">    ___0000_ || ___aAaA_ || __aAaA__</span>
-<span class="sd">    __0000__ || __AaAa__ || ________</span>
+<span class="sd">    [slice-] || [csa---] || [result]\n</span>
+<span class="sd">    ____0000 || ____AaAa || __AaAaAa\n</span>
+<span class="sd">    ___0000_ || ___aAaA_ || __aAaA__\n</span>
+<span class="sd">    __0000__ || __AaAa__ || ________\n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">template_slice</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">zeroed_slice</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid template slice: must be 3 rows&quot;</span><span class="p">)</span>
 
     <span class="c1"># loop setup</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">template_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">]</span>
-    <span class="n">csa_slice</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">template_slice</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zeroed_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">csa_slice</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">zeroed_slice</span><span class="p">)</span>
     <span class="n">tff</span> <span class="o">=</span> <span class="n">char</span> <span class="o">==</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="c1"># Toggle flip flop</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="c1"># For int in template slice, map possible CSA operands to adder_slice</span>
@@ -245,28 +237,29 @@
         <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="o">=</span> <span class="n">char</span> <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span>  <span class="p">(</span><span class="n">y0</span><span class="o">+</span><span class="n">y1</span><span class="o">+</span><span class="n">y2</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;_&#39;</span>
         <span class="n">tff</span>  <span class="o">=</span> <span class="ow">not</span><span class="p">(</span><span class="n">tff</span><span class="p">)</span> <span class="c1"># True -&gt; False -&gt; True...</span>
         <span class="n">char</span> <span class="o">=</span> <span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="n">tff</span> <span class="k">else</span> <span class="n">char</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">csa_slice</span><span class="p">,</span> <span class="n">result</span></div>
+    <span class="k">return</span> <span class="n">csa_slice</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">Slice</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="build_adder">
 <a class="viewcode-back" href="../../../api/multipy.core.html#multipy.build_adder">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">build_adder</span><span class="p">(</span>
-    <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">template_slice</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span> <span class="c1"># Carry Save Adder -&gt; (template, result)</span>
+    <span class="n">char</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">zeroed_slice</span><span class="p">:</span> <span class="n">mp</span><span class="o">.</span><span class="n">Slice</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">mp</span><span class="o">.</span><span class="n">Slice</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">Slice</span><span class="p">]:</span> <span class="c1"># Carry Save Adder -&gt; (template, result)</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create CSA template slice with zero initialised slice and chosen char.</span>
 <span class="sd">    Returns template &quot;slices&quot; for addition and the resulting slice.\n</span>
-<span class="sd">    [slice ] || [adder-] || [result]</span>
-<span class="sd">    ___0000_ || ___aAaA_ || _aAaAaA_</span>
-<span class="sd">    __0000__ || __AaAa__ || ________</span>
+<span class="sd">    [slice ] || [adder-] || [result]\n</span>
+<span class="sd">    ___0000_ || ___aAaA_ || _aAaAaA_\n</span>
+<span class="sd">    __0000__ || __AaAa__ || ________\n</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">template_slice</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">zeroed_slice</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid template slice: must be 2 rows&quot;</span><span class="p">)</span>
 
     <span class="c1"># loop setup</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">template_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">]</span>
-    <span class="n">adder_slice</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">template_slice</span><span class="p">)</span> <span class="c1"># ensure no references</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zeroed_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">adder_slice</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">zeroed_slice</span><span class="p">)</span> <span class="c1"># ensure no references</span>
 
     <span class="c1"># -- TODO ------------------------------------------------------ #</span>
     <span class="c1"># tff + char startegy can be replace with an infinite generator: #</span>
@@ -302,7 +295,7 @@
 <a class="viewcode-back" href="../../../api/multipy.core.html#multipy.Pattern">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Pattern</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">_ischar</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">),</span> <span class="p">(</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">ischar</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">),</span> <span class="p">(</span>
             <span class="s2">&quot;Error: Invalid pattern format. Expected list[char]&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span>
@@ -321,20 +314,22 @@
     <span class="c1"># cell = (ch for ch in string.ascii_lowercase)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">result</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">map</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="c1"># Complex or simple</span>
-        <span class="n">valid_range</span>  <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">SUPPORTED_BITWIDTHS</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">SUPPORTED_BITWIDTHS</span>
+        <span class="n">valid_range</span>  <span class="o">=</span> <span class="n">SUPPORTED_BITWIDTHS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">len</span>     <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">map</span>     <span class="o">=</span> <span class="nb">map</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">result</span>  <span class="o">=</span> <span class="n">result</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="kc">None</span>
 
 
         <span class="c1"># length of any template represents it&#39;s bitwidth</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">template</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_range</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valid bit lengths: </span><span class="si">{</span><span class="n">valid_range</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">_ischar</span><span class="p">(</span><span class="n">template</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">ischar</span><span class="p">(</span><span class="n">template</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pattern</span>  <span class="o">=</span> <span class="n">template</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">build_simple_template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">_ischar</span><span class="p">(</span><span class="n">template</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">elif</span> <span class="n">ischar</span><span class="p">(</span><span class="n">template</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">template</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">merged</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -342,7 +337,7 @@
 <a class="viewcode-back" href="../../../api/multipy.core.html#multipy.Template.merge">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">templates</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Merge multiple templates into a single template.</span>
+<span class="sd">        Merge multiple template slices into a single template.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">templates</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
         <span class="c1"># This looks terrible... Works tho?</span>
@@ -365,6 +360,12 @@
 
 
 
+
+
+
+
+
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Complex templates implement decoders and bit-mapping.</span>
 
@@ -375,18 +376,18 @@
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </article><footer class="bz-article-footer">
-
-
+  
+  
     <nav class="bz-related-pages" aria-label="Related pages navigation"></nav>
-
+  
 
 </footer></main>
   </div><footer class="bz-footer">
   <div class="bz-footer-copyright"><p class="bz-copyright">© Copyright 2025, Ephraim M.</p><p>
     Made with
-
+    
     <a href="https://www.sphinx-doc.org/">Sphinx</a> and
-
+    
     <a href="https://github.com/aksiome/breeze">Breeze theme</a>.
   </p>
 </div><div class="bz-external-links">

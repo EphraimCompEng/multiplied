@@ -12,8 +12,9 @@ import multipy as mp
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project   = 'MultiPy'
-copyright = '2025, Ephraim Madugba'
-author    = 'Ephraim Madugba'
+copyright = '2025, Ephraim M.'
+author    = 'Ephraim M.'
+github = 'https://github.com/EphraimCompEng/multipy'
 release   = mp.MP_VERSION
 stable    = 'v' + ".".join(release.split('.')[:2])
 
@@ -25,6 +26,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
+    'sphinx.ext.extlinks',
 ]
 
 templates_path = ['_templates', ]
@@ -36,6 +38,11 @@ exclude_patterns = []
 
 html_theme = 'breeze'
 html_static_path = ['_static']
+html_title = 'MultiPy'
+html_context = {
+    'github_user': 'EphraimCompEng',
+    'github_repo': 'multipy'
+}
 
 # -- Exposing variables to .rst files ----------------------------------------
 # https://stackoverflow.com/a/69211912 , https://stackoverflow.com/q/34006784

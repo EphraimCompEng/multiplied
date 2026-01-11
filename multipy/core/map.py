@@ -3,8 +3,6 @@
 ############################
 
 
-
-# from multipy import ischar
 import multipy as mp
 from typing import Any
 
@@ -21,6 +19,8 @@ class Map:
             self.map = map
         elif isinstance(all(map), str):
             self.rmap = self.build_map(map)
+        self.len = len(map)
+        self._index = 0
 
 
     def build_map(self, simple: list[Any]) -> object:
@@ -30,29 +30,44 @@ class Map:
         """
 
         ...
+    def __repr__(self) -> str:
+        return mp.pretty(self.map)
 
-def resolve_rmap(matrix: mp.Matrix, reversed: bool=False) -> object:
+    def __str__(self) -> str:
+        return str(self.__repr__())
+
+    def __iter__(self):
+        return iter(self.map)
+
+    def __next__(self):
+        if self._index >= self.len:
+            raise StopIteration
+        self._index += 1
+        return self.map[self._index - 1]
+
+def resolve_rmap(matrix: mp.Matrix, reversed: bool=False) -> Map:
     """
     Find empty rows, create simple map to efficiently pack rows.
     Defaults to bottom unless reversed=True.
     """
     ...
 
-def build_dadda_map(bits) -> object:
+def build_dadda_map(bits) -> Map:
+    from multipy import SUPPORTED_BITWIDTHS
     """
     Return map which represents starting point of Dadda tree algorithm.
     """
-    assert bits in mp.SUPPORTED_BITWIDTHS, (
-        ValueError(f"\tError: Unsupported bitwidth {bits}. Expected {mp.SUPPORTED_BITWIDTHS}")
+    assert bits in SUPPORTED_BITWIDTHS, (
+        ValueError(f"\tError: Unsupported bitwidth {bits}. Expected {SUPPORTED_BITWIDTHS}")
     )
 
     # -- Repulsive - Design algorithm for 16-bit+ --------------------------------------------- #
     dadda_map = {                                                                               #
         4: [                                                                                    #
-            ['00','00','00','00','00','00','00','00'],                                          #
-            ['00','00','00','FF','00','00','00','00'],                                          #
-            ['00','00','FE','FF','00','00','00','00'],                                          #
-            ['00','FD','FE','FF','00','00','00','00']                                           #
+            ['00','00','00','00'] + ['00']*4,                                          #
+            ['00','00','00','FF'] + ['00']*4,                                          #
+            ['00','00','FE','FF'] + ['00']*4,                                          #
+            ['00','FD','FE','FF'] + ['00']*4                                           #
         ],                                                                                      #
         8: [                                                                                    #
             ['00','00','00','00','00','00','00','00','00','00','00','00','00','00','00','00'],  #
@@ -68,13 +83,3 @@ def build_dadda_map(bits) -> object:
     # ----------------------------------------------------------------------------------------- #
 
     return Map(dadda_map[bits], bits)
-
-
-def main():
-    m = mp.Matrix(2)
-    mp.pprint(m)
-
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,9 @@
 from typing import Any
-import multipy as mp
+
+from multipy import Matrix, Slice, Map
 
 
-def pretty(matrix: Any) -> str:
+def pretty(listy_object: Any) -> str:
     """
     Format matrix as a string:
 
@@ -11,18 +12,24 @@ def pretty(matrix: Any) -> str:
     >>> __0000__
     >>> _0000___
     """
-    assert isinstance(matrix, (mp.Matrix, mp.Slice, list)), (
+    assert isinstance(listy_object, (Matrix, Slice, Map)), (
         "Unsupported type"
     )
-    pretty_ = ""
-    for i in matrix:
-        row = [str(x) for x in i]
+
+    # initialise pretty string
+    pretty_    = ""
+
+    # Add whitespace to map objects for readability
+    whitespace = " " if isinstance(listy_object, Map) else ""
+
+    for i in listy_object:
+        row = [str(x) + whitespace for x in i]
         pretty_ += "".join(row) + "\n"
-    return pretty_
+        # print(pretty_)
+    return str(pretty_)
 
 
 
-def pprint(matrix: Any):
+def mprint(matrix: Any):
     """Print formatted Matrix object"""
-    pretty_ = pretty(matrix)
-    print(pretty_)
+    print(pretty(matrix))

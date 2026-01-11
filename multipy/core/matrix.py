@@ -49,7 +49,7 @@ class Matrix:
                 f"Unsupported bitwidth {source}. Expected {mp.SUPPORTED_BITWIDTHS}"
             )
             self.bits = source
-            self.__empty_matrix()
+            self.__empty_matrix(source)
         elif all([isinstance(s, list) for s in source]):
             assert len(source) in mp.SUPPORTED_BITWIDTHS,(
                 f"Unsupported bitwidth {len(source)}. Expected {mp.SUPPORTED_BITWIDTHS}"
@@ -61,15 +61,15 @@ class Matrix:
         self._index = 0
 
 
-    def __empty_matrix(self) -> None:
+    def __empty_matrix(self, bits: int) -> None:
         """
         Build a wallace tree style logic AND matrix for a bitwidth of self.bits.
         """
-        row = [0]*self.bits
+        row = [0]*bits
         matrix = []
-        for i in range(self.bits):
-            matrix.append(["_"]*(self.bits-i) + row + ["_"]*i)
-        self.matrix = Matrix(matrix)
+        for i in range(bits):
+            matrix.append(["_"]*(bits-i) + row + ["_"]*i)
+        self.matrix = matrix
 
     def __repr__(self) -> str:
         return mp.pretty(self.matrix)

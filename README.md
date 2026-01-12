@@ -1,4 +1,4 @@
-# multiplicity
+# Multiplicity
 
 A powerful tool to build, test, and analyse multiplier designs.
 

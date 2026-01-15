@@ -1,16 +1,16 @@
-# multiplicity Overview
+# multiplied Overview
 
 This project was initially focused on how [saturation](https://en.wikipedia.org/wiki/Saturation_arithmetic) allows for the optimisation of a combinational [multiplier](https://en.wikipedia.org/wiki/Binary_multiplier). 
 
 Generating and analysing designs by hand is labour intensive even for small datasets. For entire [truth tables](https://en.wikipedia.org/wiki/Truth_table), this becomes close to impossible after 8-bits.
 
-Click [here](https://github.com/EphraimCompEng/multiplicity/blob/master/docs/algorithms/saturation.md) for more information on saturation in multiplicity.
+Click [here](https://github.com/EphraimCompEng/multiplied/blob/master/docs/algorithms/saturation.md) for more information on saturation in multiplied.
 
 # Algorithms
 
 The first "stage" of s combinational multiplier creates all possible partial products. These producs are then reduced across multiple stages using a range of methods. Eventually all products are reduced to one output.
 
-A [Wallace tree](https://en.wikipedia.org/wiki/Wallace_tree) is one of many multplication stategies. Let's multiply 11 * 12: 
+A [Wallace tree](https://en.wikipedia.org/wiki/Wallace_tree) is one of many multplication stategies. Let's multiplied 11 * 12: 
 
 ```
 11 * 12 -> 0b1011 * 0b1100
@@ -108,10 +108,10 @@ Parquet is recommended for large truth tables and intensive analysis
 
 ### Further Reading
 
-multiplicity:
-[Structures](https://github.com/EphraimCompEng/multiplicity/tree/master/docs/structures)
-[Algorithms](https://github.com/EphraimCompEng/multiplicity/tree/master/docs/algorithms)
-[Analysis](https://github.com/EphraimCompEng/multiplicity/tree/master/docs/analysis)
+multiplied:
+[Structures](https://github.com/EphraimCompEng/multiplied/tree/master/docs/structures)
+[Algorithms](https://github.com/EphraimCompEng/multiplied/tree/master/docs/algorithms)
+[Analysis](https://github.com/EphraimCompEng/multiplied/tree/master/docs/analysis)
 
 Multiplication:
 

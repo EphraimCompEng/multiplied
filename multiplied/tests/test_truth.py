@@ -1,4 +1,4 @@
-import multiplicity as mp
+import multiplied as mp
 
 
 

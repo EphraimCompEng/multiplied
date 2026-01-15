@@ -19,23 +19,18 @@ def test_pop_empty_matrix():
     ]
 
 def test_pop_build_matrix():
-    matrix         = mp.Matrix(8)
-    mult_by_zero_a = mp.Matrix(8)
-    mult_by_zero_b = mp.Matrix(8)
-    # exceed_matrix  = mp.Matrix(8)
-
-    matrix.build_matrix(0, 0, 8)
-    mult_by_zero_a.build_matrix(0, 42, 8)
-    mult_by_zero_b.build_matrix(42, 0, 8)
+    matrix = mp.build_matrix(0, 0, 8)
+    mult_by_zero_a = mp.build_matrix(0, 42, 8)
+    mult_by_zero_b = mp.build_matrix(42, 0, 8)
     assert matrix.bits   == mult_by_zero_a.bits
     assert matrix.bits   == mult_by_zero_b.bits
     # print(vars(matrix))
     # print(vars(mult_by_zero_a))
     # print(vars(mult_by_zero_b))
 
-def test_pop_agorithm():
-    temp1 = mp.Matrix(8) # Placeholder for template
-    temp2 = mp.Matrix(8) # Placeholder for template
+def test_pop_agorithm(): ## POPULATION NO IMPLEMENTED ##
+    temp1 = mp.Matrix(8) # Placeholder for template <-- update this
+    temp2 = mp.Matrix(8) # Placeholder for template <-- update this
     arg   = [temp1, temp2]
     alg   = mp.Algorithm(temp1)
     alg.populate(arg)

@@ -27,7 +27,7 @@ For more information head to [/docs/](https://github.com/EphraimCompEng/multipli
 
 
 ```sh
-pip install -i https://test.pypi.org/simple/ multiplied
+pip install multiplied
 ```
 ```Python
 import multiplied as mp

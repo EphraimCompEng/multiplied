@@ -16,7 +16,7 @@ from .core.matrix import (
 from .core.template import (
     Pattern,
     Template,
-    build_simple_template,
+    # build_simple_template,
     build_csa,
     build_adder,
 )
@@ -107,7 +107,7 @@ __all__ = [
     'Algorithm',
     'build_dadda_map',
     'resolve_rmap',
-    'build_simple_template',
+    # 'build_simple_template',
     'build_csa',
     'build_adder',
     'truth_scope',

@@ -29,10 +29,11 @@ def build_csa(
         raise ValueError("Invalid template slice: must be 3 rows")
 
     # loop setup
-    n = len(zeroed_slice[0])
-    result = [['_']*n, ['_']*n, ['_']*n]
+    n         = len(zeroed_slice[0])
+    tff       = mp.chartff(char) # Toggle flip flop
+    result    = [['_']*n, ['_']*n, ['_']*n]
     csa_slice = copy.copy(zeroed_slice)
-    tff = char == char.lower() # Toggle flip flop
+    
     for i in range(n):
         # For int in template slice, map possible CSA operands to adder_slice
         # Then map possible outputs to result
@@ -49,8 +50,7 @@ def build_csa(
         csa_slice[2][i] = char if (y2:=csa_slice[2][i] != '_') else '_'
         result[0][i]    = char if 1 <= (y0+y1+y2) else '_'
         result[1][i-1]  = char if 1 <  (y0+y1+y2) else '_'
-        tff  = not(tff) # True -> False -> True...
-        char = char.lower() if tff else char.upper()
+        char = next(tff)
     return csa_slice, mp.Slice(result)
 
 
@@ -68,17 +68,10 @@ def build_adder(
         raise ValueError("Invalid template slice: must be 2 rows")
 
     # loop setup
-    n = len(zeroed_slice[0])
-    result = [['_']*n, ['_']*n]
+    n           = len(zeroed_slice[0])
+    tff         = mp.chartff(char) # Toggle flip flop
+    result      = [['_']*n, ['_']*n]
     adder_slice = copy.copy(zeroed_slice) # ensure no references
-
-    # -- TODO ------------------------------------------------------ #
-    # tff + char startegy can be replace with an infinite generator: #
-    # while True: yield outputs char.upper(); yeild char.lower       #
-    # make and add to _utils?                                        #
-    tff = (char == char.lower()) # Toggle flip flop                  #
-    # -------------------------------------------------------------- #
-
 
     for i in range(n):
         # For int, [0, 1], in matrix slice, map possible ADD operands to
@@ -94,13 +87,11 @@ def build_adder(
         adder_slice[0][i] = char if (y0:=adder_slice[0][i] != '_') else '_'
         adder_slice[1][i] = char if (y1:=adder_slice[1][i] != '_') else '_'
         result[0][i]      = char if y0 or y1 else '_'
-        tff  = not(tff) # True -> False -> True...
-        char = char.lower() if tff else char.upper()
+        char = next(tff)
 
     # Adding final carry
-    tff      = not(tff) # Undo last flip to find last used tff value
     pre_char = char
-    char     = char.lower() if tff else char.upper()
+    char     = next(tff)
     index    = result[0].index(char)-1 # find first instance of char - 1
     result[0][index] = pre_char # Final carry place in result template
 

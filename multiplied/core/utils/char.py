@@ -22,7 +22,7 @@ def chargen() -> Generator[str]:
         yield chr((i % 26) + 65)
         i += 1
 
-def chartff(char_) -> Generator[str]:
+def chartff(ch: str) -> Generator[str]:
     """
     Infinitely generate char in upper then lowercase form.
 
@@ -35,26 +35,13 @@ def chartff(char_) -> Generator[str]:
     'a'
 
     """
+
+    if not ischar(ch):
+        raise ValueError("Input must be a single alphabetic character")
+
     i = True
     while True:
         if i := not(i):
-            yield char_.lower()
+            yield ch.lower()
         else:
-            yield char_.upper()
-
-
-
-
-
-# -- testing --------------------------------------------------------
-def main():
-    testgen = chargen()
-    for _ in range(32):
-        tmp = next(testgen)
-        testtff = chartff(tmp)
-        for _ in range(8):
-            print(next(testtff), end='')
-        print(tmp)
-
-if __name__ == "__main__":
-    main()
+            yield ch.upper()

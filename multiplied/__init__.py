@@ -41,7 +41,7 @@ from .core.map import (
 from .core.utils.char import (
     ischar,
     chargen,
-    charttf,
+    chartff
 )
 
 
@@ -119,7 +119,7 @@ __all__ = [
     'Map',
     'ischar',
     'chargen',
-    'charttf',
+    'chartff',
     'pretty',
     'mprint',
     'MP_VERSION',

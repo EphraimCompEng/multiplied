@@ -60,7 +60,7 @@ class Matrix:
         if isinstance(source, int):
             self.bits = source
             self.__empty_matrix(source)
-        elif all([isinstance(row, list) for row in source]):
+        elif all([isinstance(row, (list, Slice)) for row in source]):
             if len(source)*2 != len(source[0]):
                 raise ValueError("Matrix must be 2m * m")
             self.bits = len(source)

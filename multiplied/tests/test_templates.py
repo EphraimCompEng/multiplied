@@ -58,11 +58,13 @@ def test_temp_build_adder8() -> None:
 def test_build_from_pattern() -> None:
     mypattern = mp.Pattern([
         'a',
-        'b',
+        'a',
         'b',
         'b',
     ])
     mytemplate = mp.Template(mypattern)
+    print(mytemplate.template)
+    print(mytemplate.result)
 
 
 def main() -> None:

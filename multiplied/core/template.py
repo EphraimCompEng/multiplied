@@ -111,11 +111,13 @@ def build_noop(
 
     n           = len(zeroed_slice[0])
     tff         = mp.chartff(char) # Toggle flip flop
-    noop_slice = copy.copy(zeroed_slice) # ensure no references
+    noop_slice  = copy.copy(zeroed_slice) # ensure no references
     for i in range(n):
         noop_slice[0][i] = char if (noop_slice[0][i] != '_') else '_'
         char = next(tff)
-    return noop_slice, noop_slice
+
+    # (noop_slice, noop_slice) == tuple both pointing to one object.
+    return noop_slice, copy.copy(noop_slice)
 
 class Pattern:
     """
@@ -171,7 +173,7 @@ class Template:
             if dadda:
                 # TODO
                 raise NotImplementedError("Applying maps not implemented")
-            self.template = self.build_from_pattern(self.pattern, matrix)
+            self.build_from_pattern(self.pattern, matrix)
         elif ischar(source[0][0]):
             self.template = source
             self.pattern  = None
@@ -212,7 +214,7 @@ class Template:
             )
 
         # -- find run ---------------------------------------------------
-        template = {}
+        template_slices = {}
         i = 1
         while i < len(pattern):
             run = 1
@@ -221,22 +223,26 @@ class Template:
                 i   += 1
             match run:
                 case 1: # Do nothing
-                    template[i-run] = build_noop(pattern[i-run], matrix[i-run:i])
+                    template_slices[i-run] = build_noop(pattern[i-run], matrix[i-run:i])
                 case 2: # Create adder
-                    template[i-run] = build_adder(pattern[i-run], matrix[i-run:i])
+                    template_slices[i-run] = build_adder(pattern[i-run], matrix[i-run:i])
                 case 3: # Create CSA row
-                    template[i-run] = build_csa(pattern[i-run], matrix[i-run:i])
+                    template_slices[i-run] = build_csa(pattern[i-run], matrix[i-run:i])
                 case _:
                     raise ValueError(f"Unsupported run length {run}")
             i += 1
-        print(template)
-        for i in template.values():
-            print(i[0])
-        for i in template.values():
-            print(i[1])
 
         # -- build template and resultant ---------------------------
-        # return merge(xyz)
+        template = []
+        for i in template_slices.values():
+            template += i[0]
+        result = []
+        for i in template_slices.values():
+            result += i[1]
+
+        self.template, self.result = mp.Matrix(template), mp.Matrix(result)
+
+
 
     def merge(self, templates: list[Any]) -> None:
         """

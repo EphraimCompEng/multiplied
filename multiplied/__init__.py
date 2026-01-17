@@ -40,6 +40,8 @@ from .core.map import (
 # -- utils --------------------------------------
 from .core.utils.char import (
     ischar,
+    chargen,
+    charttf,
 )
 
 
@@ -116,6 +118,8 @@ __all__ = [
     'json_pretty_store',
     'Map',
     'ischar',
+    'chargen',
+    'charttf',
     'pretty',
     'mprint',
     'MP_VERSION',

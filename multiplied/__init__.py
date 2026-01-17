@@ -16,7 +16,7 @@ from .core.matrix import (
 from .core.template import (
     Pattern,
     Template,
-    build_simple_template,
+    # build_simple_template,
     build_csa,
     build_adder,
 )
@@ -40,6 +40,8 @@ from .core.map import (
 # -- utils --------------------------------------
 from .core.utils.char import (
     ischar,
+    chargen,
+    chartff
 )
 
 
@@ -107,7 +109,7 @@ __all__ = [
     'Algorithm',
     'build_dadda_map',
     'resolve_rmap',
-    'build_simple_template',
+    # 'build_simple_template',
     'build_csa',
     'build_adder',
     'truth_scope',
@@ -116,6 +118,8 @@ __all__ = [
     'json_pretty_store',
     'Map',
     'ischar',
+    'chargen',
+    'chartff',
     'pretty',
     'mprint',
     'MP_VERSION',

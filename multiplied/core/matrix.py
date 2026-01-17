@@ -6,8 +6,12 @@ class Slice:
 
     """
     def __init__(self, matrix: list[list[str]]):
+        self.bits   = len(matrix[0]) >> 1
+        if self.bits not in mp.SUPPORTED_BITWIDTHS:
+            raise ValueError(
+                f"Unsupported bitwidth {self.bits}. Expected {mp.SUPPORTED_BITWIDTHS}"
+            )
         self.slice  =  matrix
-        self.bits   = len(self.slice[0][0]) >> 1
         self._index = 0
         self.len    = len(self.slice)
 
@@ -16,13 +20,12 @@ class Slice:
 
 
     def _repr_(self):
-        return mp.pretty(self.slice)
+        return self.__str__()
 
     def __str__(self):
-        return str(self._repr_())
+        return str(mp.pretty(self.slice))
 
     def __len__(self) -> int:
-        print(len(self.slice))
         return len(self.slice)
 
     def __iter__(self) -> Iterator:
@@ -100,7 +103,10 @@ class Matrix:
     #     return mp.Slice(slice)
 
     def __getitem__(self, index: slice) -> Slice:
-        return mp.Slice(self.matrix[index])
+        slice = self.matrix[index]
+        if len(slice) == 1:
+            slice = list(slice)
+        return mp.Slice(slice)
 
     def __iter__(self):
         return iter(self.matrix)
